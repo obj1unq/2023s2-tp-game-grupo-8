@@ -2,6 +2,9 @@ import wollok.game.*
 import colisiones.*
 import wollok.game.*
 import direcciones.*
+import sonidos.*
+
+
 object barra {
 	var property position = game.at(20, 1)
 	
@@ -25,6 +28,7 @@ object nave1 {
 	method image(){
 		return "nave1.png"
 	}
+	
 	
 	method actualizar() {		
 		self.mover(1)
@@ -62,6 +66,8 @@ object bala {
 	
 	method image() = "bala.png"
 	
+	
+	
 	method actualizar() {
 		self.mover(8)
 		if(self.position().y() >= game.height() -3){
@@ -69,10 +75,12 @@ object bala {
 			game.removeTickEvent("Bala")
 			encargadoDeColisiones.colisionables().remove(self)
 		}
+			
 	}
 	
 	method disparar(elQueDispara) {
 		self.position(elQueDispara.position())
+		
 	}
 	
 	method mover(velocidad) {
@@ -83,5 +91,8 @@ object bala {
 	method colision(otro) {
 		game.removeVisual(otro)
 		game.removeTickEvent("Nave1")
+		//esto en un futuro habra que modificarlo
+		//hacer el msj play polimorfico
+		encargadoDeSonidos.reproducir("esplosion.mp3")	
 	}
 }
