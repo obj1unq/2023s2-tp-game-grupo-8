@@ -8,6 +8,7 @@ import armas.*
 object barra {
 	var property position = game.at(20, 1)
 	var property arma = armaBalistica
+	var property cantBalas = 10
 	
 	method image(){
 		return "barra.png"
@@ -18,15 +19,32 @@ object barra {
 		self.position(proxima)
 	}
 	
+	method disparar() {
+		self.validarDisparar()
+		cantBalas -= 1
+	}
+	
+	method validarDisparar() {
+		if (not self.tieneBalas()) {
+			self.error("No tengo mas Balas!!")
+		}
+	}
+	
+	method tieneBalas() {
+		return cantBalas > 0 
+	}
+	
+	
+	
 	method text() {
-		return arma.toString()
+		return cantBalas.toString()
 	}
 }
 
 
 
-object bala {
-	var property position
+class Bala {
+	var property position = null
 	var property velocidad = 10 //Mientras mas bajo el numero, mas rapida la bala
 	
 	method image() = "bala.png"
@@ -40,7 +58,7 @@ object bala {
 	
 	method disparar(elQueDispara) {
 		self.position(game.at(elQueDispara.position().x(), elQueDispara.position().y() +1))
-		
+		elQueDispara.disparar() 
 	}	
 	
 	method mover() {
@@ -55,7 +73,11 @@ object bala {
 	
 	method remover(){
 		game.removeVisual(self)
-		game.removeTickEvent("Bala")		
+		game.removeTickEvent(self.identity().toString())		
+	}
+	
+	method destruir(){
+		//hay que solucionar colision entre balas, si no salta error, esto sucede al disparar dos balas demasiado rapido
 	}
 }
 	

@@ -52,8 +52,8 @@ class NaveBasica {
 		if(self.debeGirar()){
 			self.bajaAntes()
 			direccion = direccion.opuesto()
-		}
-		const proxima = direccion.siguiente(self.position())//,velocidad.velocidad
+		}	
+		const proxima = direccion.siguiente(self.position())
 		self.position(proxima)		
 	}
 	
