@@ -1,34 +1,34 @@
+
 import wollok.game.*
 import qalaga.*
 import direcciones.*
-import colisiones.*
+import enemigos.*
 import sonidos.*
 import armas.*
 
 
 program juego {
-	encargadoDeColisiones.colisionables([nave1])
 	game.cellSize(20)
 	game.width(40)
 	game.height(30)
+	flotaNivelUno.iniciarFlota()
 	game.ground("bg.png")
 	tablero.mostrarSelector()
 	tablero.seleccionDeArmas()
-	game.addVisual(barra)	
-	game.addVisual(nave1)
+	game.addVisual(barra)
+	flotaNivelUno.enemigos().forEach({enemigo => game.addVisual(enemigo)})
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
-	
+		
 	keyboard.space().onPressDo({
-		game.addVisual(bala)
-		encargadoDeSonidos.reproducir("disparo-normal.mp3")
-		encargadoDeColisiones.colisionables().add(bala)
-		bala.disparar(barra)
-		game.onTick(bala.velocidad(), "Bala", {bala.actualizar()})	
+		if(not game.allVisuals().any({v=> v == bala})) {			
+			game.addVisual(bala)		
+			encargadoDeSonidos.reproducir("disparo-normal.mp3")
+			bala.disparar(barra)
+			game.onTick(bala.velocidad(), "Bala", {bala.actualizar()})		
+			game.onCollideDo(bala, {other=> bala.colision(other)})
+		}
 	})
 	
-	game.onCollideDo(nave1, {otro => otro.colision(nave1)})
-	game.onTick(100, "Nave1", {nave1.actualizar()})
-	game.onTick(100, "Colisiones", {encargadoDeColisiones.verificarColisiones()})
 	game.start()
 }
