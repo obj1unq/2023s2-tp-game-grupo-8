@@ -3,6 +3,8 @@ import qalaga.*
 import direcciones.*
 import enemigos.*
 import sonidos.*
+import armas.*
+import tablero.*
 import movimientoDeEnemigos.*
 
 program juego {
@@ -11,16 +13,15 @@ program juego {
 	game.height(30)
 	flotaNivelUno.iniciarFlota()
 	game.ground("bg.png")
-	game.addVisual(barra)	
-	flotaNivelUno.enemigos().forEach({enemigo => 
-		game.addVisual(enemigo)		
-	})	
-	
-	game.onTick(1,"MovimientoEnemigo", {encargadoDeMovimientoEnemigo.mover(flotaNivelUno.enemigos())})
-	
+	tablero.mostrarSelector()
+	tablero.seleccionDeArmas()
+	tablero.mostrarArmas()
+	game.addVisual(barra)
+	flotaNivelUno.enemigos().forEach({enemigo => game.addVisual(enemigo)})
+  game.onTick(1,"MovimientoEnemigo", {encargadoDeMovimientoEnemigo.mover(flotaNivelUno.enemigos())})
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
-	
+		
 	keyboard.space().onPressDo({
 		if(not game.allVisuals().any({v=> v == bala})) {			
 			game.addVisual(bala)		
@@ -33,3 +34,4 @@ program juego {
 	
 	game.start()
 }
+

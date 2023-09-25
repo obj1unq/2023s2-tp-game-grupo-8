@@ -1,11 +1,13 @@
-import wollok.game.*
+import tablero.*
 import wollok.game.*
 import direcciones.*
 import sonidos.*
+import armas.*
 
 
 object barra {
 	var property position = game.at(20, 1)
+	var property arma = armaBalistica
 	
 	method image(){
 		return "barra.png"
@@ -14,20 +16,14 @@ object barra {
 	method mover(direccion) {
 		const proxima = direccion.siguiente(self.position())
 		self.position(proxima)
-	}		
-}
-
-object tablero {
-
-	method pertenece(position) {
-		return position.x().between(0, game.width() - 5) and 
-			position.y().between(0, game.height() - 5)
 	}
 	
-	method seFuePorArriba(position){
-		return position.y() > game.height()
+	method text() {
+		return arma.toString()
 	}
 }
+
+
 
 object bala {
 	var property position
@@ -39,8 +35,7 @@ object bala {
 		self.mover()
 		if(tablero.seFuePorArriba(self.position())){
 			self.remover()			
-		}
-			
+		}		
 	}
 	
 	method disparar(elQueDispara) {
@@ -51,7 +46,7 @@ object bala {
 	method mover() {
 		const proxima = arriba.siguiente(self.position())
 		self.position(proxima)
-	}	
+	}
 	
 	method colision(otro) {
 		otro.destruir()		
@@ -63,8 +58,11 @@ object bala {
 		game.removeTickEvent("Bala")		
 	}
 }
+	
 
 class Punto {
 	var property x
 	var property y
 }
+
+
