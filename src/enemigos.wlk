@@ -2,12 +2,14 @@ import wollok.game.*
 import qalaga.*
 import direcciones.*
 import sonidos.*
+import movimientoDeEnemigos.*
 
 object flotaNivelUno {
 	var property enemigos = []	
 	
 	method iniciarFlota(){
 		self.crearMatrizParaLineas(4).forEach({punto => enemigos.add(self.naveEn(punto))})
+		
 	}	
 	
 	method crearMatrizParaLineas(cantidad) {
@@ -43,14 +45,15 @@ class NaveBasica {
 	}
 	
 	method actualizar() {		
-		self.mover(1)
+		self.mover()
 	}
 	
-	method mover(velocidad) {
+	method mover() {//velocidad,saco velocidad xq no se para que es, me tiraba error
 		if(self.debeGirar()){
+			self.bajaAntes()
 			direccion = direccion.opuesto()
-		}	
-		const proxima = direccion.siguiente(self.position(), velocidad)
+		}
+		const proxima = direccion.siguiente(self.position())//,velocidad.velocidad
 		self.position(proxima)		
 	}
 	
@@ -60,7 +63,11 @@ class NaveBasica {
 	method destruir(){
 		game.removeVisual(self)
 		encargadoDeSonidos.reproducir("esplosion.mp3")
+	}
+	method bajaAntes() {
+		const proxima = abajo.siguiente(self.position())
+		self.position(proxima)
 	}					 				 
-							 
+			 
 }
 

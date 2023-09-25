@@ -3,7 +3,7 @@ import qalaga.*
 import direcciones.*
 import enemigos.*
 import sonidos.*
-
+import movimientoDeEnemigos.*
 
 program juego {
 	game.cellSize(20)
@@ -15,6 +15,9 @@ program juego {
 	flotaNivelUno.enemigos().forEach({enemigo => 
 		game.addVisual(enemigo)		
 	})	
+	
+	game.onTick(1,"MovimientoEnemigo", {encargadoDeMovimientoEnemigo.mover(flotaNivelUno.enemigos())})
+	
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
 	
