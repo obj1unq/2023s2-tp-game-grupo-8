@@ -1,5 +1,4 @@
 import wollok.game.*
-import colisiones.*
 import wollok.game.*
 import direcciones.*
 object barra {
@@ -11,41 +10,9 @@ object barra {
 	
 	method mover(direccion) {
 		const proxima = direccion.siguiente(self.position(), 3)
-		//if(tablero.pertenece(proxima)) {
-			
-			self.position(proxima)		
-		//}
-		//Por ahora no es un problema
-	}
+		self.position(proxima)
+	}		
 }
-
-object nave1 {
-	var property position = game.at(20, 17)
-	var property direccion = derecha
-	method image(){
-		return "nave1.png"
-	}
-	
-	method actualizar() {		
-		self.mover(1)
-	}
-	
-	method mover(velocidad) {
-		if(self.debeGirar()){
-			direccion = direccion.opuesto()
-		}	
-		const proxima = direccion.siguiente(self.position(), velocidad)
-		self.position(proxima)		
-	}
-	
-	method debeGirar() = self.position().x() >= game.width() - 10 ||
-						 self.position().x() <= 10
-						 
-	method colision(otro){
-		
-	}						 
-}
-
 
 
 
@@ -55,6 +22,10 @@ object tablero {
 		return position.x().between(0, game.width() - 5) and 
 			position.y().between(0, game.height() - 5)
 	}
+	
+	method seFuePorArriba(position){
+		return position.y() > game.height()
+	}
 }
 
 object bala {
@@ -63,17 +34,17 @@ object bala {
 	method image() = "bala.png"
 	
 	method actualizar() {
-		self.mover(8)
-		if(self.position().y() >= game.height() -3){
-			game.removeVisual(self)
-			game.removeTickEvent("Bala")
-			encargadoDeColisiones.colisionables().remove(self)
+		self.mover(1)
+		if(tablero.seFuePorArriba(self.position())){
+			self.remover()			
 		}
 	}
 	
 	method disparar(elQueDispara) {
-		self.position(elQueDispara.position())
+		self.position(game.at(elQueDispara.position().x(), elQueDispara.position().y() +1))
 	}
+	
+	
 	
 	method mover(velocidad) {
 		const proxima = arriba.siguiente(self.position(), velocidad)
@@ -81,7 +52,17 @@ object bala {
 	}	
 	
 	method colision(otro) {
-		game.removeVisual(otro)
-		game.removeTickEvent("Nave1")
+		game.removeVisual(otro)	
+		self.remover()
 	}
+	
+	method remover(){
+		game.removeVisual(self)
+		game.removeTickEvent("Bala")		
+	}
+}
+
+class Punto {
+	var property x
+	var property y
 }

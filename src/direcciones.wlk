@@ -22,7 +22,7 @@ object izquierda {
 object arriba {
 
 	method siguiente(position, velocidad) {
-		return position.up(10)
+		return position.up(velocidad)
 	}
 
 }
