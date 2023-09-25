@@ -13,7 +13,7 @@ object barra {
 	}
 	
 	method mover(direccion) {
-		const proxima = direccion.siguiente(self.position(), 3)
+		const proxima = direccion.siguiente(self.position())
 		//if(tablero.pertenece(proxima)) {
 			
 			self.position(proxima)		
@@ -31,14 +31,14 @@ object nave1 {
 	
 	
 	method actualizar() {		
-		self.mover(1)
+		self.mover()
 	}
 	
-	method mover(velocidad) {
+	method mover() {
 		if(self.debeGirar()){
 			direccion = direccion.opuesto()
 		}	
-		const proxima = direccion.siguiente(self.position(), velocidad)
+		const proxima = direccion.siguiente(self.position())
 		self.position(proxima)		
 	}
 	
@@ -63,13 +63,12 @@ object tablero {
 
 object bala {
 	var property position
+	var property velocidad = 10 //Mientras mas bajo el numero, mas rapida la bala
 	
 	method image() = "bala.png"
 	
-	
-	
 	method actualizar() {
-		self.mover(8)
+		self.mover()
 		if(self.position().y() >= game.height() -3){
 			game.removeVisual(self)
 			game.removeTickEvent("Bala")
@@ -83,8 +82,8 @@ object bala {
 		
 	}
 	
-	method mover(velocidad) {
-		const proxima = arriba.siguiente(self.position(), velocidad)
+	method mover() {
+		const proxima = arriba.siguiente(self.position())
 		self.position(proxima)
 	}	
 	
