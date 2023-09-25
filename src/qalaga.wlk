@@ -1,6 +1,9 @@
 import wollok.game.*
 import wollok.game.*
 import direcciones.*
+import sonidos.*
+
+
 object barra {
 	var property position = game.at(20, 1)
 	
@@ -9,12 +12,10 @@ object barra {
 	}
 	
 	method mover(direccion) {
-		const proxima = direccion.siguiente(self.position(), 3)
+		const proxima = direccion.siguiente(self.position())
 		self.position(proxima)
 	}		
 }
-
-
 
 object tablero {
 
@@ -30,18 +31,21 @@ object tablero {
 
 object bala {
 	var property position
+	var property velocidad = 10 //Mientras mas bajo el numero, mas rapida la bala
 	
 	method image() = "bala.png"
 	
 	method actualizar() {
-		self.mover(1)
+		self.mover()
 		if(tablero.seFuePorArriba(self.position())){
 			self.remover()			
 		}
+			
 	}
 	
 	method disparar(elQueDispara) {
 		self.position(game.at(elQueDispara.position().x(), elQueDispara.position().y() +1))
+		
 	}
 	
 	
@@ -52,13 +56,8 @@ object bala {
 	}	
 	
 	method colision(otro) {
-		game.removeVisual(otro)	
+		game.removeVisual(otro)
 		self.remover()
-	}
-	
-	method remover(){
-		game.removeVisual(self)
-		game.removeTickEvent("Bala")		
 	}
 }
 

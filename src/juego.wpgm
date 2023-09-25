@@ -2,8 +2,10 @@ import wollok.game.*
 import qalaga.*
 import direcciones.*
 import enemigos.*
+import sonidos.*
 
-program abc {
+
+program juego {
 	game.cellSize(20)
 	game.width(40)
 	game.height(30)
@@ -15,13 +17,16 @@ program abc {
 	})	
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
+	
 	keyboard.space().onPressDo({
 		if(not game.allVisuals().any({v=> v == bala})) {			
 			game.addVisual(bala)		
+			encargadoDeSonidos.reproducir("disparo-normal.mp3")
 			bala.disparar(barra)
-			game.onTick(50, "Bala", {bala.actualizar()})		
+			game.onTick(bala.velocidad(), "Bala", {bala.actualizar()})		
 			game.onCollideDo(bala, {other=> bala.colision(other)})
 		}
 	})
+	
 	game.start()
 }
