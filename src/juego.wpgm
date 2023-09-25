@@ -5,6 +5,7 @@ import direcciones.*
 import enemigos.*
 import sonidos.*
 import armas.*
+import tablero.*
 
 
 program juego {
@@ -15,6 +16,7 @@ program juego {
 	game.ground("bg.png")
 	tablero.mostrarSelector()
 	tablero.seleccionDeArmas()
+	tablero.mostrarArmas()
 	game.addVisual(barra)
 	flotaNivelUno.enemigos().forEach({enemigo => game.addVisual(enemigo)})
 	keyboard.left().onPressDo({barra.mover(izquierda)})
