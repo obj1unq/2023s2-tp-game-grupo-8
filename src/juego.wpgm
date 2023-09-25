@@ -3,6 +3,8 @@ import qalaga.*
 import direcciones.*
 import colisiones.*
 import sonidos.*
+import armas.*
+
 
 program juego {
 	encargadoDeColisiones.colisionables([nave1])
@@ -10,6 +12,8 @@ program juego {
 	game.width(40)
 	game.height(30)
 	game.ground("bg.png")
+	tablero.mostrarSelector()
+	tablero.seleccionDeArmas()
 	game.addVisual(barra)	
 	game.addVisual(nave1)
 	keyboard.left().onPressDo({barra.mover(izquierda)})
