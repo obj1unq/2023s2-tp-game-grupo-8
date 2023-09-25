@@ -1,8 +1,10 @@
+
 import wollok.game.*
 import qalaga.*
 import direcciones.*
 import enemigos.*
 import sonidos.*
+import armas.*
 
 
 program juego {
@@ -11,13 +13,13 @@ program juego {
 	game.height(30)
 	flotaNivelUno.iniciarFlota()
 	game.ground("bg.png")
-	game.addVisual(barra)	
-	flotaNivelUno.enemigos().forEach({enemigo => 
-		game.addVisual(enemigo)		
-	})	
+	tablero.mostrarSelector()
+	tablero.seleccionDeArmas()
+	game.addVisual(barra)
+	flotaNivelUno.enemigos().forEach({enemigo => game.addVisual(enemigo)})
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
-	
+		
 	keyboard.space().onPressDo({
 		if(not game.allVisuals().any({v=> v == bala})) {			
 			game.addVisual(bala)		
