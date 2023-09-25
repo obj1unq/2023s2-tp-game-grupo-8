@@ -1,6 +1,7 @@
 import wollok.game.*
 import qalaga.*
 import direcciones.*
+import sonidos.*
 
 object flotaNivelUno {
 	var property enemigos = []	
@@ -54,7 +55,12 @@ class NaveBasica {
 	}
 	
 	method debeGirar() = self.position().x() >= game.width() - 10 ||
-						 self.position().x() <= 10						 
+						 self.position().x() <= 10		
+						 
+	method destruir(){
+		game.removeVisual(self)
+		encargadoDeSonidos.reproducir("esplosion.mp3")
+	}					 				 
 							 
 }
 

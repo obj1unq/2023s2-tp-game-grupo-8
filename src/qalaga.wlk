@@ -54,7 +54,7 @@ object bala {
 	}	
 	
 	method colision(otro) {
-		game.removeVisual(otro)
+		otro.destruir()		
 		self.remover()
 	}
 	
