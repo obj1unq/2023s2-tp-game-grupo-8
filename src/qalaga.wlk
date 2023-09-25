@@ -46,18 +46,21 @@ object bala {
 	method disparar(elQueDispara) {
 		self.position(game.at(elQueDispara.position().x(), elQueDispara.position().y() +1))
 		
-	}
+	}	
 	
-	
-	
-	method mover(velocidad) {
-		const proxima = arriba.siguiente(self.position(), velocidad)
+	method mover() {
+		const proxima = arriba.siguiente(self.position())
 		self.position(proxima)
 	}	
 	
 	method colision(otro) {
 		game.removeVisual(otro)
 		self.remover()
+	}
+	
+	method remover(){
+		game.removeVisual(self)
+		game.removeTickEvent("Bala")		
 	}
 }
 

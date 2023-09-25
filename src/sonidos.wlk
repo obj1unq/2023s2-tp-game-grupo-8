@@ -1,7 +1,6 @@
 import wollok.game.*
 import qalaga.*
 import direcciones.*
-import colisiones.*
 
 object encargadoDeSonidos {
 	
