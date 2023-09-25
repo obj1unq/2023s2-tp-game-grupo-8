@@ -20,7 +20,7 @@ object encargadoDeColisiones {
 	method esElMismoColisionable(colisionable, otro) = colisionable == otro
 	
 	method hayColision(colisionable, otro) {		
-		return (colisionable.position().x() - otro.position().x()).abs() < 10 &&
-				(colisionable.position().y() - otro.position().y()).abs() < 10
+		return (colisionable.position().x() - otro.position().x()).abs() < 1 &&
+				(colisionable.position().y() - otro.position().y()).abs() < 1
 	}
 }

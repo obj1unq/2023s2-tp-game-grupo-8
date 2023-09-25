@@ -3,8 +3,8 @@ import qalaga.*
 
 object derecha {
 
-	method siguiente(position, velocidad) {
-		return position.right(velocidad)
+	method siguiente(position) {
+		return position.right(1)
 	}
 	
 	method opuesto() = izquierda
@@ -12,8 +12,8 @@ object derecha {
 
 object izquierda {
 
-	method siguiente(position, velocidad) {
-		return position.left(velocidad)
+	method siguiente(position) {
+		return position.left(1)
 	}
 	method opuesto() = derecha
 
@@ -21,8 +21,8 @@ object izquierda {
 
 object arriba {
 
-	method siguiente(position, velocidad) {
-		return position.up(10)
+	method siguiente(position) {
+		return position.up(1)
 	}
 
 }
