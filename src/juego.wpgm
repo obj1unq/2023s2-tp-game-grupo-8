@@ -5,7 +5,6 @@ import enemigos.*
 import sonidos.*
 import armas.*
 import tablero.*
-import movimientoDeEnemigos.*
 
 program juego {
 	game.cellSize(20)
@@ -18,7 +17,8 @@ program juego {
 	tablero.mostrarArmas()
 	game.addVisual(barra)
 	flotaNivelUno.enemigos().forEach({enemigo => game.addVisual(enemigo)})
-  game.onTick(1,"MovimientoEnemigo", {encargadoDeMovimientoEnemigo.mover(flotaNivelUno.enemigos())})
+  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.encargadoDeMovimientosEnemigos()})
+  	
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
 		

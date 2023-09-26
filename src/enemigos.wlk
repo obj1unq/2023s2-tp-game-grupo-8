@@ -2,7 +2,7 @@ import wollok.game.*
 import qalaga.*
 import direcciones.*
 import sonidos.*
-import movimientoDeEnemigos.*
+
 
 object flotaNivelUno {
 	var property enemigos = []	
@@ -10,7 +10,11 @@ object flotaNivelUno {
 	method iniciarFlota(){
 		self.crearMatrizParaLineas(4).forEach({punto => enemigos.add(self.naveEn(punto))})
 		
-	}	
+	}
+	
+	method encargadoDeMovimientosEnemigos(){
+		enemigos.forEach({nave=>nave.actualizar()})
+	}
 	
 	method crearMatrizParaLineas(cantidad) {
 		const ancho = 20
