@@ -15,10 +15,17 @@ describe "funcionalidadDelJuego"{
 	test "destruccionDeNaveEnemigaPorBala"{
 
 		
-		const bala = new Bala(position=game.at(5,5),velocidad = 1)
-	
+		const bala = new Bala(position=game.at(1,5),velocidad = 1)
+		
+		
+		
 		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
 		
+//		barra.position(game.at(5,1))
+//		
+		bala.colision(naveEnemiga)
+		
+		naveEnemiga.destruir()
 		
 		assert.that(naveEnemiga.estado()==destruida)
 		

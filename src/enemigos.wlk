@@ -40,17 +40,6 @@ object flotaNivelUno {
 	
 }
 
-object volando{
-	method image(){
-		return "nave1.png"
-	}
-}
-object destruida{
-	method image(){
-		return "esplosion.png"
-	}
-	
-}
 object nave{
 	var property position = game.at(15,5)
 	var property direccion = null
@@ -61,8 +50,7 @@ object nave{
 	}
 	method destruir(){
 		self.estado(destruida)
-		//game.schedule(100, game.removeVisual(self))
-		
+		game.schedule(500, {game.removeVisual(self)})
 		encargadoDeSonidos.reproducir("esplosion.mp3")
 	}
 }
@@ -93,7 +81,7 @@ class NaveBasica {
 						 
 	method destruir(){
 		self.estado(destruida)
-		game.schedule(100, game.removeVisual(self))
+		game.schedule(1000, {game.removeVisual(self)})
 		encargadoDeSonidos.reproducir("esplosion.mp3")
 	}
 	method bajaAntes() {
@@ -101,5 +89,17 @@ class NaveBasica {
 		self.position(proxima)
 	}					 				 
 		 
+}
+
+object volando{
+	method image(){
+		return "nave1.png"
+	}
+}
+object destruida{
+	method image(){
+		return "esplosion.png"
+	}
+	
 }
 
