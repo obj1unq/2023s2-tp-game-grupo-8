@@ -7,6 +7,7 @@ import armas.*
 import tablero.*
 
 program juego {
+	game.addVisual(nave)
 	game.cellSize(20)
 	game.width(40)
 	game.height(30)

@@ -1,0 +1,26 @@
+import armas.*
+import qalaga.*
+import enemigos.*
+import wollok.game.*
+
+describe "funcionalidadDelJuego"{
+	
+	method initialize(){
+		game.clear()
+//		game.title("Space Invaders")
+		game.cellSize(20)
+		game.width(40)
+		game.height(30)
+	}
+	test "destruccionDeNaveEnemigaPorBala"{
+
+		
+		const bala = new Bala(position=game.at(5,5),velocidad = 1)
+	
+		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
+		
+		
+		assert.that(naveEnemiga.estado()==destruida)
+		
+	}
+}
