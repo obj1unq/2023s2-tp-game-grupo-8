@@ -11,7 +11,7 @@ object barra {
 	var property cantBalas = 10
 	
 	method image(){
-		return "barra.png"
+		return "nave.png"
 	}
 	
 	method mover(direccion) {
