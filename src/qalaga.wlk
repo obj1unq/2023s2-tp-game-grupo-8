@@ -57,8 +57,7 @@ class Bala {
 	}
 	
 	method disparar(elQueDispara) {
-		self.position(game.at(elQueDispara.position().x(), elQueDispara.position().y() +1))
-		elQueDispara.disparar() 
+		self.position(game.at(elQueDispara.position().x(), elQueDispara.position().y() +1)) 
 	}	
 	
 	method mover() {
