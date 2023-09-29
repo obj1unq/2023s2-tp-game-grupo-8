@@ -65,7 +65,8 @@ class Bala {
 		const proxima = arriba.siguiente(self.position())
 		self.position(proxima)
 	}
-	
+	//quiero testear que la nave colisiona con la bala pero la colion 
+		//se modifica con un msj
 	method colision(otro) {
 		otro.destruir()		
 		self.remover()

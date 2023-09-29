@@ -1,5 +1,6 @@
 import qalaga.*
 import wollok.game.*
+import sonidos.*
 
 class RecuadroArma {
 
@@ -67,5 +68,19 @@ object armaDeParticulas {
 		nave.arma(self)
 	}
 
+}
+
+object creadorDeBalas{
+	method crear(){
+		const bala = new Bala()
+		
+		if(not game.allVisuals().any({v=> v == bala})) {			
+			game.addVisual(bala)		
+			encargadoDeSonidos.reproducir("disparo-normal.mp3")
+			bala.disparar(barra)
+			game.onTick(bala.velocidad(), bala.identity().toString(), {bala.actualizar()})		
+			game.onCollideDo(bala, {other=> bala.colision(other)})
+		}
+	}
 }
 

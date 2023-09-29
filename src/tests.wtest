@@ -1,6 +1,7 @@
 import armas.*
 import qalaga.*
 import enemigos.*
+import sonidos.*
 import wollok.game.*
 
 describe "funcionalidadDelJuego"{
@@ -11,23 +12,36 @@ describe "funcionalidadDelJuego"{
 		game.cellSize(20)
 		game.width(40)
 		game.height(30)
+		
+		encargadoDeSonidos.modoTest(true)
+	
 	}
 	test "destruccionDeNaveEnemigaPorBala"{
 
+		creadorDeBalas.crear()
 		
-		const bala = new Bala(position=game.at(1,5),velocidad = 1)
+		const bala = game.allVisuals().first()
 		
 		
 		
 		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
+		game.addVisual(naveEnemiga)
+		//barra.position(game.at(5,1))
 		
-//		barra.position(game.at(5,1))
-//		
+
+		
 		bala.colision(naveEnemiga)
 		
-		naveEnemiga.destruir()
+		assert.that(naveEnemiga.estado() == destruida)
+	//	assert.notThat(game.allVisuals().contains(bala))
+	}
+	
+	test "destrucionDeLaNave"{
+		const bala = new Bala(position=game.at(5,5),velocidad = 1)
 		
-		assert.that(naveEnemiga.estado()==destruida)
-		
+		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
+		game.addVisual(naveEnemiga)
+		game.addVisual(bala)
+		assert.that(game.getObjectsIn(game.at(5,5)).isEmpty())
 	}
 }

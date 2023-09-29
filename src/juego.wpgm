@@ -25,15 +25,9 @@ program juego {
 		
 	keyboard.space().onPressDo({
 		barra.disparar()
-		const bala = new Bala()
-		if(not game.allVisuals().any({v=> v == bala})) {			
-			game.addVisual(bala)		
-			encargadoDeSonidos.reproducir("disparo-normal.mp3")
-			bala.disparar(barra)
-			game.onTick(bala.velocidad(), bala.identity().toString(), {bala.actualizar()})		
-			game.onCollideDo(bala, {other=> bala.colision(other)})
-		}
+		creadorDeBalas.crear()
 	})
 	
 	game.start()
 }
+

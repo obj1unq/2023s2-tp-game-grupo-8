@@ -4,7 +4,11 @@ import direcciones.*
 
 object encargadoDeSonidos {
 	
+	var property modoTest = false
 	method reproducir(nombreDelSonido){
-		game.sound(nombreDelSonido).play()
+		if (not self.modoTest()){
+			game.sound(nombreDelSonido).play()
+		}
+		
 	}
 }
