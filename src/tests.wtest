@@ -1,0 +1,26 @@
+import wollok.game.*
+import enemigos.*
+import tablero.*
+
+describe "test unitarios de naves enemigas"  {
+	
+	method initialize() {
+		game.width(10)
+		game.height(10)
+	}
+	
+	test "celdas del tablero" {
+		assert.notThat(tablero.pertenece(game.at(10,9)))
+	}
+	
+	test "crear una nave y testear movimientos" {
+		const nave = new NaveBasica(position = game.at(7,9))
+		
+		nave.mover()
+		nave.mover()
+		assert.equals(game.at(9,9), nave.position())
+		nave.mover()
+		assert.equals(game.at(8,8), nave.position())
+	}
+	
+}

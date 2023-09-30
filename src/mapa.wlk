@@ -14,7 +14,9 @@ object _ { // Objetos vacios
 object n { // Naves enemigas
 	
 	method generar(position) {
-		game.addVisual(new NaveBasica(position = position))
+		const enemigo = new NaveBasica(position = position)
+		game.addVisual(enemigo)
+		flotaNivelUno.agregar(enemigo)
 	}
 		
 }

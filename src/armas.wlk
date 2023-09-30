@@ -38,6 +38,15 @@ object selector {
 
 }
 
+object  armas {
+	method mostrar()  {
+		game.addVisual(armaBalistica)
+		game.addVisual(laser)
+		game.addVisual(misil)
+		game.addVisual(armaDeParticulas)
+	}
+}
+
 object armaBalistica {
 	
 	const property position = game.at(0, 0)

@@ -13,9 +13,9 @@ program juego {
 	game.ground("bg.png")
 	
 	selector.armas()
-	tablero.mostrarArmas()
+	armas.mostrar()
 	
-  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.encargadoDeMovimientosEnemigos()})
+  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
   	
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
