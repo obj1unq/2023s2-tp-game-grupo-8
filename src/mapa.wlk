@@ -19,10 +19,11 @@ object n { // Naves enemigas
 		
 }
 
-object s { // Selector de armas
+object r { // Selector de armas
 
 	method generar(position) {
 		game.addVisual(new RecuadroArma(position = position))
+		selector.agregarRecuadro(position)
 	}
 	
 }
@@ -45,13 +46,16 @@ object mapa {
 		[_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_],		
 		[_,_,_,_,b,_,_,_,_,_],		
-		[s,s,s,s,_,_,_,_,_,_]		
+		[r,r,r,r,_,_,_,_,_,_]		
 	].reverse() //reverse porque el y crece en el orden inverso
 	
 	method generar() {
 		game.width(celdas.anyOne().size())
 		game.height(celdas.size())
+		game.cellSize(50)
 		(0 .. game.width() - 1).forEach({ x => (0 .. game.height() - 1).forEach({ y => self.generarCelda(x, y)})})
+		
+		game.addVisual(selector)  // se instancia el selector 
 	}
 
 	method generarCelda(x, y) {
