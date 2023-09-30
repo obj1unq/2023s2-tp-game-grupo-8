@@ -11,7 +11,7 @@ object barra {
 	var property cantBalas = 10
 	
 	method image(){
-		return "barra.png"
+		return "nave.png"
 	}
 	
 	method mover(direccion) {
@@ -64,7 +64,8 @@ class Bala {
 		const proxima = arriba.siguiente(self.position())
 		self.position(proxima)
 	}
-	
+	//quiero testear que la nave colisiona con la bala pero la colion 
+		//se modifica con un msj
 	method colision(otro) {
 		otro.destruir()		
 		self.remover()
