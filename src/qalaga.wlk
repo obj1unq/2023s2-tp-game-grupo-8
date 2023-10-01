@@ -16,9 +16,14 @@ object barra {
 	
 	method mover(direccion) {
 		const proxima = direccion.siguiente(self.position())
+		self.validarMover(proxima)
 		self.position(proxima)
 	}
-	
+	method validarMover(proxima) {
+		if (not tablero.perteneceAlEjeXDelTablero(proxima)){
+			self.error("warning,limite de la batalla")
+		}
+	}
 	method disparar() {
 		self.validarDisparar()
 		cantBalas -= 1
@@ -39,6 +44,7 @@ object barra {
 	method text() {
 		return cantBalas.toString()
 	}
+
 }
 
 
