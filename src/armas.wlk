@@ -1,5 +1,8 @@
 import qalaga.*
 import wollok.game.*
+
+import mapa.*
+
 import sonidos.*
 
 class RecuadroArma {
@@ -20,7 +23,31 @@ object selector {
 
 	var property position = game.at(0, 0)
 	const property image = "selector.png"
+	
+	const property recuadrosPosition  = []
+	
+	method agregarRecuadro(_position) {
+		recuadrosPosition.add(_position)
+	}
+	
+	method armas() {
+		keyboard.num1().onPressDo({self.position(recuadrosPosition.get(0))})
+		keyboard.num2().onPressDo({self.position(recuadrosPosition.get(1))})
+		keyboard.num3().onPressDo({self.position(recuadrosPosition.get(2))})
+		keyboard.num4().onPressDo({self.position(recuadrosPosition.get(3))})
+	
+		game.onCollideDo(self, {arma => arma.seleccionar(barra)})
+	}
 
+}
+
+object  armas {
+	method mostrar()  {
+		game.addVisual(armaBalistica)
+		game.addVisual(laser)
+		game.addVisual(misil)
+		game.addVisual(armaDeParticulas)
+	}
 }
 
 object armaBalistica {
@@ -37,7 +64,7 @@ object armaBalistica {
 
 object laser {
 	
-	const property position = game.at(2, 0)
+	const property position = game.at(1, 0)
 	const property image = "armaBalistica.png"
 	
 	method seleccionar(nave) {
@@ -49,7 +76,7 @@ object laser {
 
 object misil {
 	
-	const property position = game.at(4, 0)
+	const property position = game.at(2, 0)
 	const property image = "armaBalistica.png"
 	
 	method seleccionar(nave) {
@@ -61,7 +88,7 @@ object misil {
 
 object armaDeParticulas {
 	
-	const property position = game.at(6, 0)
+	const property position = game.at(3, 0)
 	const property image = "armaBalistica.png"
 	
 	method seleccionar(nave) {

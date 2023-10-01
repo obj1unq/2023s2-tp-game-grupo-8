@@ -1,14 +1,16 @@
+
 import armas.*
 import qalaga.*
 import enemigos.*
 import sonidos.*
+import tablero.*
+import mapa.*
 import wollok.game.*
 
 describe "funcionalidadDelJuego"{
 	
 	method initialize(){
 		game.clear()
-//		game.title("Space Invaders")
 		game.cellSize(20)
 		game.width(40)
 		game.height(30)
@@ -21,9 +23,7 @@ describe "funcionalidadDelJuego"{
 		creadorDeBalas.crear()
 		
 		const bala = game.allVisuals().first()
-		
-		
-		
+	
 		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
 		game.addVisual(naveEnemiga)
 		//barra.position(game.at(5,1))
@@ -36,12 +36,16 @@ describe "funcionalidadDelJuego"{
 	//	assert.notThat(game.allVisuals().contains(bala))
 	}
 	
-	test "destrucionDeLaNave"{
-		const bala = new Bala(position=game.at(5,5),velocidad = 1)
+  	test "crear una nave y testear movimientos" {
+		const nave = new NaveBasica(position = game.at(7,9))
 		
-		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
-		game.addVisual(naveEnemiga)
-		game.addVisual(bala)
-		assert.that(game.getObjectsIn(game.at(5,5)).isEmpty())
+		nave.mover()
+		nave.mover()
+		assert.equals(game.at(9,9), nave.position())
+		nave.mover()
+		assert.equals(game.at(8,8), nave.position())
+	}
+  	test "celdas del tablero" {
+		assert.notThat(tablero.pertenece(game.at(10,9)))
 	}
 }

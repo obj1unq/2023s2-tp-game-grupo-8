@@ -5,19 +5,17 @@ import enemigos.*
 import sonidos.*
 import armas.*
 import tablero.*
+import mapa.*
 
 program juego {
-	game.cellSize(20)
-	game.width(40)
-	game.height(30)
-	flotaNivelUno.iniciarFlota()
+	
+	mapa.generar()
 	game.ground("bg.png")
-	tablero.mostrarSelector()
-	tablero.seleccionDeArmas()
-	tablero.mostrarArmas()
-	game.addVisual(barra)
-	flotaNivelUno.enemigos().forEach({enemigo => game.addVisual(enemigo)})
-  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.encargadoDeMovimientosEnemigos()})
+	
+	selector.armas()
+	armas.mostrar()
+	
+  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
   	
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
