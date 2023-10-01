@@ -3,6 +3,15 @@ import enemigos.*
 import qalaga.*
 import armas.*
 
+object score{
+	const property position = game.at(4,game.height()-1)
+	var puntos = 100
+	
+	method text(){
+		return "score:"+puntos.toString()+""
+	}
+	
+}
 object _ { // Objetos vacios
 
 	method generar(position) {
@@ -42,6 +51,8 @@ object b { // Nave principal
 object mapa {
 
 	var celdas = [
+		[_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_],
 		[_,_,n,n,n,n,n,n,_,_],
 		[_,_,_,n,n,n,n,_,_,_],
 		[_,_,_,_,n,n,_,_,_,_],
