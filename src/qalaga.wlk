@@ -44,7 +44,20 @@ object barra {
 	method text() {
 		return cantBalas.toString()
 	}
-
+	
+	method destruir(){
+		
+		game.removeVisual(self)//aca quedaria bien un power up de invencible 
+	}
+	method colision(otro) {
+		otro.destruir()		
+		self.remover(self)
+	}
+	
+	method remover(bala){
+//		game.removeVisual(bala)
+//		game.removeTickEvent(bala.identity().toString())		
+	}
 }
 
 
@@ -58,7 +71,7 @@ class Bala {
 	method actualizar() {
 		self.mover()
 		if(tablero.seFuePorArriba(self.position())){
-			self.remover()			
+			self.remover(self)			
 		}		
 	}
 	
@@ -74,12 +87,12 @@ class Bala {
 		//se modifica con un msj
 	method colision(otro) {
 		otro.destruir()		
-		self.remover()
+		self.remover(self)
 	}
 	
-	method remover(){
-		game.removeVisual(self)
-		game.removeTickEvent(self.identity().toString())		
+	method remover(bala){
+		game.removeVisual(bala)
+		game.removeTickEvent(bala.identity().toString())		
 	}
 	
 	method destruir(){

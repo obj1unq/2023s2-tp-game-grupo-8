@@ -53,11 +53,22 @@ class NaveBasica {
 	}
 	method debeGirar() = self.position().x() >= game.width() - 10 ||
 						 self.position().x() <= 10		
-						 
+	
+	method colision(algo){//colision.refactori
+		self.destruir()
+		algo.destruir()//aca quedaria bien un power up de invencible 
+		
+		
+	}
+					 
 	method destruir(){
 		self.estado(destruida)
 		game.schedule(1000, {game.removeVisual(self)})
 		encargadoDeSonidos.reproducir("esplosion.mp3")
+	}
+	method remover(naveActual) {
+		game.removeVisual(naveActual)
+		game.removeTickEvent("MovimientoEnemigo")
 	}		 				 
 		 
 }
