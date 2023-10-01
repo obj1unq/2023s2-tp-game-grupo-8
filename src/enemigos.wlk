@@ -57,7 +57,7 @@ class NaveBasica {
 	method colision(algo){//colision.refactori
 		self.destruir()
 		algo.destruir()//aca quedaria bien un power up de invencible 
-		
+		self.remover(self)
 		
 	}
 					 
