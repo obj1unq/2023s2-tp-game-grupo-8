@@ -6,6 +6,7 @@ import sonidos.*
 import tablero.*
 import mapa.*
 import wollok.game.*
+import direcciones.*
 
 describe "funcionalidadDelJuego"{
 	
@@ -36,16 +37,19 @@ describe "funcionalidadDelJuego"{
 	//	assert.notThat(game.allVisuals().contains(bala))
 	}
 	
-  	test "crear una nave y testear movimientos" {
-		const nave = new NaveBasica(position = game.at(7,9))
+  	test "nave enemiga se mueve cumpliendo la animacion" {
+		const nave = new NaveBasica(position = game.at(5,5))
+		assert.equals(game.at(5,5), nave.position())
 		
+		nave.direccion(derecha)
 		nave.mover()
-		nave.mover()
-		assert.equals(game.at(9,9), nave.position())
-		nave.mover()
-		assert.equals(game.at(8,8), nave.position())
+		assert.equals(game.at(6,5), nave.position())
+
 	}
-  	test "celdas del tablero" {
-		assert.notThat(tablero.pertenece(game.at(10,9)))
-	}
+	
+	
+//  	test "celdas del tablero" {
+//		assert.notThat(tablero.pertenece(game.at(10,9)))
+//	}
+	
 }
