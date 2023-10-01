@@ -47,9 +47,16 @@ describe "funcionalidadDelJuego"{
 
 	}
 	
-	
+	test"barra no debe salir del mapa"{
+		barra.position(game.at(1,1))
+		barra.mover(izquierda)
+		assert.equals(barra.position(),game.at(0,1))
+		assert.throwsException({barra.mover(izquierda)})
+	}
 //  	test "celdas del tablero" {
 //		assert.notThat(tablero.pertenece(game.at(10,9)))
 //	}
+	
+	
 	
 }
