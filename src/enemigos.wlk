@@ -71,6 +71,6 @@ object destruida{
 	method image(){
 		return "esplosion.png"
 	}
-	
+}
 
 
