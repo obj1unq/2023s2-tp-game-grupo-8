@@ -1,19 +1,42 @@
-import wollok.game.*
-import enemigos.*
-import tablero.*
 
-describe "test unitarios de naves enemigas"  {
+import armas.*
+import qalaga.*
+import enemigos.*
+import sonidos.*
+import tablero.*
+import mapa.*
+import wollok.game.*
+
+describe "funcionalidadDelJuego"{
 	
-	method initialize() {
-		game.width(10)
-		game.height(10)
+	method initialize(){
+		game.clear()
+		game.cellSize(20)
+		game.width(40)
+		game.height(30)
+		
+		encargadoDeSonidos.modoTest(true)
+	
+	}
+	test "destruccionDeNaveEnemigaPorBala"{
+
+		creadorDeBalas.crear()
+		
+		const bala = game.allVisuals().first()
+	
+		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
+		game.addVisual(naveEnemiga)
+		//barra.position(game.at(5,1))
+		
+
+		
+		bala.colision(naveEnemiga)
+		
+		assert.that(naveEnemiga.estado() == destruida)
+	//	assert.notThat(game.allVisuals().contains(bala))
 	}
 	
-	test "celdas del tablero" {
-		assert.notThat(tablero.pertenece(game.at(10,9)))
-	}
-	
-	test "crear una nave y testear movimientos" {
+  	test "crear una nave y testear movimientos" {
 		const nave = new NaveBasica(position = game.at(7,9))
 		
 		nave.mover()
@@ -22,5 +45,7 @@ describe "test unitarios de naves enemigas"  {
 		nave.mover()
 		assert.equals(game.at(8,8), nave.position())
 	}
-	
+  	test "celdas del tablero" {
+		assert.notThat(tablero.pertenece(game.at(10,9)))
+	}
 }
