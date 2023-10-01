@@ -8,19 +8,19 @@ import tablero.*
 import mapa.*
 
 program juego {
-	
+
 	game.width(12)
 	game.height(12)
 	mapa.generar()
 	game.addVisual(score)
-	
+//	const nave = new NaveBasica(position = game.at(3,1),direccion = null)//test
+//	game.addVisual(nave)//test
 	game.ground("bg.png")
-	
 	selector.armas()
 	armas.mostrar()
 	
   	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
-  	
+  	game.onCollideDo(barra, {enemigo => enemigo.colision(barra)})
 	keyboard.left().onPressDo({barra.mover(izquierda)})
 	keyboard.right().onPressDo({barra.mover(derecha)})
 		
