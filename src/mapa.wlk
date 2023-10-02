@@ -30,6 +30,7 @@ object n { // Naves enemigas
 		
 }
 
+
 object r { // Selector de armas
 
 	method generar(position) {
@@ -50,6 +51,7 @@ object b { // Nave principal
 
 object mapa {
 
+	
 	var celdas = [
 		[_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_],
@@ -61,6 +63,7 @@ object mapa {
 		[_,_,_,_,b,_,_,_,_,_],		
 		[r,r,r,r,_,_,_,_,_,_]		
 	].reverse() //reverse porque el y crece en el orden inverso
+	
 	
 	method generar() {
 		game.width(celdas.anyOne().size())
