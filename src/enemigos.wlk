@@ -18,6 +18,40 @@ object flotaNivelUno {
 	}
 }
 
+object flotaNivelDos {
+	const property enemigos = []
+
+	method agregar(enemigo) {
+		
+		enemigos.add(enemigo)
+	}
+
+	method mover() {
+		enemigos.forEach({ nave => nave.mover()})
+	}
+}
+class NaveNivel2 {
+	var property position = game.at(0,game.height()-1)
+	var property direccion = abajo
+	var property estado = volando
+	
+	method image (){
+		return estado.image()
+	}
+	
+	method mover(){
+		const proxima = direccion.siguiente(self.position())
+		
+			if (self.llegoAlLimiteInferior()){
+				game.removeVisual(self)
+			}
+		
+		self.position(proxima)
+	}
+	method llegoAlLimiteInferior() {
+		return  self.position().y() == 1
+	}
+}
 class NaveBasica {
 
 	var property position
