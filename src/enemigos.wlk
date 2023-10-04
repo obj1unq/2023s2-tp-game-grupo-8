@@ -96,6 +96,7 @@ class NaveBasica {
 	}
 					 
 	method destruir(){
+		score.aumentarPuntos()
 		self.estado(destruida)
 		game.schedule(1000, {game.removeVisual(self)})
 		encargadoDeSonidos.reproducir("esplosion.mp3")
