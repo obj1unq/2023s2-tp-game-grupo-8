@@ -8,7 +8,7 @@ import armas.*
 object barra {
 	var property position = game.at(20, 1)
 	var property arma = armaBalistica
-	var property cantBalas = 10
+	var property cantBalas = 18
 	
 	method image(){
 		return "nave.png"

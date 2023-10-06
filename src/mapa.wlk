@@ -2,15 +2,29 @@ import wollok.game.*
 import enemigos.*
 import qalaga.*
 import armas.*
+import randomizer.*
+import direcciones.*
 
 object score{
 	const property position = game.at(4,game.height()-1)
-	var puntos = 100
+	var property puntos = 0//1200
 	
 	method text(){
 		return "score:"+puntos.toString()+""
 	}
+	method aumentarPuntos(){
+		puntos += 100
+	}
 	
+	
+	
+}
+object nivel {
+	const property estado = mapa
+	
+	method generar(){
+		estado.generar()
+	}
 }
 object _ { // Objetos vacios
 
@@ -51,6 +65,7 @@ object b { // Nave principal
 
 object mapa {
 
+	const property estado = self
 	
 	var celdas = [
 		[_,_,_,_,_,_,_,_,_,_],
@@ -78,5 +93,15 @@ object mapa {
 		const celda = celdas.get(y).get(x)
 		celda.generar(game.at(x, y))
 	}
-
+	
 }
+
+object nivel2{
+	const property estado = self
+	method generar(){
+		const enemigo = new NaveNivel2(position = randomizer.emptyPosition())
+		game.addVisual(enemigo)
+		flotaNivelDos.agregar(enemigo)
+	}
+}
+
