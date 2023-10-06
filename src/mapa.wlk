@@ -3,6 +3,7 @@ import enemigos.*
 import qalaga.*
 import armas.*
 import randomizer.*
+import direcciones.*
 
 object score{
 	const property position = game.at(4,game.height()-1)

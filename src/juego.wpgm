@@ -22,7 +22,7 @@ program juego {
 	
 	
   	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
-  	//game.onTick(1000,"MovimientoEnemigo", {nave.mover()})
+  	
   	game.onTick(100,"MovimientoEnemigo", {flotaNivelDos.mover()})
   	//me gustaria poner esto a medida que pase los puntos
   	game.schedule(8000, {game.onTick(1000,"e", {nivel2.generar()})})

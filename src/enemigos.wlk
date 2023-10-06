@@ -4,6 +4,7 @@ import direcciones.*
 import sonidos.*
 import mapa.*
 import tablero.*
+import randomizer.*
 
 object flotaNivelUno {
 
