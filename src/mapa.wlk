@@ -4,21 +4,10 @@ import qalaga.*
 import armas.*
 import randomizer.*
 import direcciones.*
+import tablero.*
 
-object score{
-	const property position = game.at(4,game.height()-1)
-	var property puntos = 0//1200
-	
-	method text(){
-		return "score:"+puntos.toString()+""
-	}
-	method aumentarPuntos(){
-		puntos += 100
-	}
-	
-	
-	
-}
+
+
 object nivel {
 	const property estado = mapa
 	
@@ -32,6 +21,15 @@ object _ { // Objetos vacios
 		//El vacio no agrega nada
 	}
 		
+}
+
+object s { // Score
+	
+	method generar(position) {
+		score.position(position)
+		game.addVisual(score)
+	}
+	
 }
 
 object n { // Naves enemigas
@@ -68,15 +66,20 @@ object mapa {
 	const property estado = self
 	
 	var celdas = [
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,n,n,n,n,n,n,_,_],
-		[_,_,_,n,n,n,n,_,_,_],
-		[_,_,_,_,n,n,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],		
-		[_,_,_,_,b,_,_,_,_,_],		
-		[r,r,r,r,_,_,_,_,_,_]		
+		[_,_,_,_,_,s,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,n,n,n,n,n,n,n,_,_],
+		[_,_,_,n,n,n,n,n,_,_,_],
+		[_,_,_,_,n,n,n,_,_,_,_],
+		[_,_,_,_,_,n,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,b,_,_,_,_,_],		
+		[r,r,r,r,_,_,_,_,_,_,_]		
 	].reverse() //reverse porque el y crece en el orden inverso
 	
 	
