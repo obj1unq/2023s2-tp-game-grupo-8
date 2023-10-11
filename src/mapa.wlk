@@ -2,15 +2,18 @@ import wollok.game.*
 import enemigos.*
 import qalaga.*
 import armas.*
+import randomizer.*
+import direcciones.*
+import tablero.*
 
-object score{
-	const property position = game.at(4,game.height()-1)
-	var puntos = 100
+
+
+object nivel {
+	const property estado = mapa
 	
-	method text(){
-		return "score:"+puntos.toString()+""
+	method generar(){
+		estado.generar()
 	}
-	
 }
 object _ { // Objetos vacios
 
@@ -18,6 +21,15 @@ object _ { // Objetos vacios
 		//El vacio no agrega nada
 	}
 		
+}
+
+object s { // Score
+	
+	method generar(position) {
+		score.position(position)
+		game.addVisual(score)
+	}
+	
 }
 
 object n { // Naves enemigas
@@ -51,21 +63,23 @@ object b { // Nave principal
 
 object mapa {
 
+	const property estado = self
 	
 	var celdas = [
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,n,n,n,n,n,n,_,_],
-		[_,_,_,n,n,n,n,_,_,_],
-		[_,_,_,_,n,n,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],	
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],	
-		[_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_],		
-		[_,_,_,_,b,_,_,_,_,_],		
-		[r,r,r,r,_,_,_,_,_,_]		
+		[_,_,_,_,_,s,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,n,n,n,n,n,n,n,_,_],
+		[_,_,_,n,n,n,n,n,_,_,_],
+		[_,_,_,_,n,n,n,_,_,_,_],
+		[_,_,_,_,_,n,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,b,_,_,_,_,_],		
+		[r,r,r,r,_,_,_,_,_,_,_]
 	].reverse() //reverse porque el y crece en el orden inverso
 	
 	
@@ -82,5 +96,15 @@ object mapa {
 		const celda = celdas.get(y).get(x)
 		celda.generar(game.at(x, y))
 	}
-
+	
 }
+
+object nivel2{
+	const property estado = self
+	method generar(){
+		const enemigo = new NaveNivel2(position = randomizer.emptyPosition())
+		game.addVisual(enemigo)
+		flotaNivelDos.agregar(enemigo)
+	}
+}
+
