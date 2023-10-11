@@ -18,6 +18,19 @@ object tablero {
 	method seFuePorArriba(position){
 		return position.y() > game.height()
 	}
+		
+}
+
+object score{
+	var property position
+	var property puntos = 0 //1200
 	
+	method text(){
+		return "score:" + puntos.toString()+""
+	}
 	
+	method aumentarPuntos(){
+		puntos += 100
+	}
+
 }

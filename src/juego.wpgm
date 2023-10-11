@@ -13,7 +13,6 @@ program juego {
 	game.height(12)
 	mapa.generar()
 	//nivel2.generar()
-	game.addVisual(score)
 	//const nave = new NaveNivel2()//test
 	//game.addVisual(nave)//test
 	game.ground("bg.png")
