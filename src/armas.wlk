@@ -31,8 +31,14 @@ object selector {
 	}
 	
 	method armas() {
-		keyboard.num1().onPressDo({self.position(recuadrosPosition.get(0))})
-		keyboard.num2().onPressDo({self.position(recuadrosPosition.get(1))})
+		keyboard.num1().onPressDo({
+			self.position(recuadrosPosition.get(0))
+			barra.creadorDeBala(creadorDeBalas)
+		})
+		keyboard.num2().onPressDo({
+			self.position(recuadrosPosition.get(1))
+			barra.creadorDeBala(creadorDeTiroTriple)
+		})
 		keyboard.num3().onPressDo({self.position(recuadrosPosition.get(2))})
 		keyboard.num4().onPressDo({self.position(recuadrosPosition.get(3))})
 	
@@ -41,7 +47,7 @@ object selector {
 
 }
 
-object  armas {
+object armas {
 	method mostrar()  {
 		game.addVisual(armaBalistica)
 		game.addVisual(laser)
@@ -109,5 +115,19 @@ object creadorDeBalas{
 			game.onCollideDo(bala, {other=> bala.colision(other)})
 		}
 	}
+	
 }
 
+object creadorDeTiroTriple{
+	method crear(){
+		var vectores = [
+			new Punto(x= 0.5, y = 1),
+			new Punto(x= 1, y = 1),
+			new Punto(x= 0, y = 1),
+			new Punto(x= -0.5, y = 1),
+			new Punto(x= -1, y = 1)
+		]
+		var balas = vectores.map({vector=> new TiroTriple(movimiento = vector)})
+		balasManager.registrarBalas(balas)		
+	}		
+}

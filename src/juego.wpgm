@@ -32,7 +32,6 @@ program juego {
 		
 	keyboard.space().onPressDo({
 		barra.disparar()
-		creadorDeBalas.crear()
 	})
 	
 	game.start()
