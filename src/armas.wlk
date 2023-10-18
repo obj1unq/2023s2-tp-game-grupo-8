@@ -33,11 +33,11 @@ object selector {
 	method armas() {
 		keyboard.num1().onPressDo({
 			self.position(recuadrosPosition.get(0))
-			barra.creadorDeBalas(creadorDeBalas)
+			barra.creadorDeBala(creadorDeBalas)
 		})
 		keyboard.num2().onPressDo({
 			self.position(recuadrosPosition.get(1))
-			barra.creadorDeBalas(creadorDeTiroTriple)
+			barra.creadorDeBala(creadorDeTiroTriple)
 		})
 		keyboard.num3().onPressDo({self.position(recuadrosPosition.get(2))})
 		keyboard.num4().onPressDo({self.position(recuadrosPosition.get(3))})

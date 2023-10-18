@@ -102,9 +102,11 @@ object mapa {
 object nivel2{
 	const property estado = self
 	method generar(){
-		const enemigo = new NaveNivel2(position = randomizer.emptyPosition())
-		game.addVisual(enemigo)
-		flotaNivelDos.agregar(enemigo)
+		if (flotaNivelUno.estaMuerta()) {			
+			const enemigo = new NaveNivel2(position = randomizer.emptyPosition())
+			game.addVisual(enemigo)
+			flotaNivelDos.agregar(enemigo)
+		}
 	}
 }
 

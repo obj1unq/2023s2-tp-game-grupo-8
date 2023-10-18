@@ -56,3 +56,42 @@ describe "funcionalidadDelJuego"{
 	
 	
 }
+
+describe "FlotaNivelUno" {
+	
+	method initialize(){
+		game.clear()
+		game.cellSize(20)
+		game.width(40)
+		game.height(30)
+		
+		encargadoDeSonidos.modoTest(true)
+	
+	}
+	
+	test "estaMuerta" {
+		mapa.generar()
+		assert.equals(16, flotaNivelUno.enemigos().size()) // depende de las naves enemigas que se agrueguen en el mapa.
+		flotaNivelUno.enemigos().first().destruir()
+		assert.equals(15, flotaNivelUno.enemigos().size())
+		assert.notThat(flotaNivelUno.estaMuerta())
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		flotaNivelUno.enemigos().first().destruir()
+		assert.equals(0, flotaNivelUno.enemigos().size())
+		assert.that(flotaNivelUno.estaMuerta())
+	}
+	
+}

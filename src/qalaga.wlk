@@ -9,7 +9,7 @@ object barra {
 	var property position = game.at(20, 1)
 	var property arma = armaBalistica
 	var property cantBalas = 18
-	var property creadorDeBalas
+	var property creadorDeBala = creadorDeBalas
   
 	method image(){
 		return "nave.png"
@@ -27,7 +27,7 @@ object barra {
 	}
 	method disparar() {
 		self.validarDisparar()
-		creadorDeBalas.crear()
+		creadorDeBala.crear()
 		cantBalas -= 1
 	}
 	
@@ -56,8 +56,8 @@ object barra {
 		self.remover(self)
 	}
 	
-	method remover(bala){
-//		game.removeVisual(bala)
+	method remover(_bala){
+//		game.removeVisual(_bala)
 //		game.removeTickEvent(bala.identity().toString())		
 	}
 }
