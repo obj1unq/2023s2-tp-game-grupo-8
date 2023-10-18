@@ -32,5 +32,9 @@ object score{
 	method aumentarPuntos(){
 		puntos += 100
 	}
+	
+	method destruir(){
+		
+	}
 
 }
