@@ -9,18 +9,17 @@ import mapa.*
 
 program juego {
 
-	game.width(22)
-	game.height(12)
 	mapa.generar()
+	
 	//nivel2.generar()
 	//const nave = new NaveNivel2()//test
 	//game.addVisual(nave)//test
+	
 	game.ground("bg.png")
 	selector.armas()
 	armas.mostrar()
 	
   	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
-  	
   	game.onTick(100,"MovimientoEnemigo", {flotaNivelDos.mover()})
   	
   	//Hay que hacer refactor y emproligar el codigo y cambiar los nombres
