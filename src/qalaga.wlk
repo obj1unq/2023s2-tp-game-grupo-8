@@ -79,6 +79,7 @@ class Bala {
 		self.mover(self)
 		if(self.limiteDelVueloDelDisparo(self)){
 			self.remover(self)			
+			
 		}		
 	}
 	
