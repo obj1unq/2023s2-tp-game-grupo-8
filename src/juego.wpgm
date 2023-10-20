@@ -12,7 +12,7 @@ program juego {
 	mapa.generar()
 	
 	//nivel2.generar()
-	//,a
+	//
 	const nave0 = new NaveBasica(position = game.at(3,3))//test
 	const nave1 = new NaveBasica(position = game.at(3,5))//test
 	game.addVisual(nave0)//test
