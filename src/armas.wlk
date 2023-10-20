@@ -104,18 +104,33 @@ object armaDeParticulas {
 }
 
 object creadorDeBalas{
-	method crear(){
-		const bala = new Bala()
+	
+	method crearDisparoAliada(nave){
+		const bala = new DisparoAliado()
 		
 		if(not game.allVisuals().any({v=> v == bala})) {			
 			game.addVisual(bala)		
 			encargadoDeSonidos.reproducir("disparo-normal.mp3")
-			bala.disparar(barra)
+			// este comportamiento puede diferenciarse de una nave enemiga o una aliada.
+			//
+			bala.disparar(nave)
 			game.onTick(bala.velocidad(), bala.identity().toString(), {bala.actualizar()})		
 			game.onCollideDo(bala, {other=> bala.colision(other)})
 		}
 	}
-	
+	method crearDisparoEnemigo(nave){
+		const bala = new DisparoEnemigo()
+		
+		if(not game.allVisuals().any({v=> v == bala})) {			
+			game.addVisual(bala)		
+			encargadoDeSonidos.reproducir("disparo-normal.mp3")
+			// este comportamiento puede diferenciarse de una nave enemiga o una aliada.
+			//
+			bala.disparar(nave)
+			game.onTick(bala.velocidad(), bala.identity().toString(), {bala.actualizar()})		
+			game.onCollideDo(bala, {other=> bala.colision(other)})
+		}
+	}
 }
 
 object creadorDeTiroTriple{

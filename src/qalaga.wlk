@@ -27,7 +27,8 @@ object barra {
 	}
 	method disparar() {
 		self.validarDisparar()
-		creadorDeBala.crear()
+		//esto se repite
+		creadorDeBala.crearDisparoAliada(self)
 		cantBalas -= 1
 	}
 	
@@ -60,36 +61,42 @@ object barra {
 //		game.removeVisual(_bala)
 //		game.removeTickEvent(bala.identity().toString())		
 	}
+	method destruirPlayer(disparo){
+		self.destruir()
+		disparo.remover(disparo)
+	}
 }
 
 
 
 class Bala {
 	var property position = null
-	var property velocidad = 10 //Mientras mas bajo el numero, mas rapida la bala
+	var property velocidad = 1000//10 //Mientras mas bajo el numero, mas rapida la bala
 	
 	method image() = "bala.png"
 	
 	method actualizar() {
-		self.mover()
-		if(tablero.seFuePorArriba(self.position())){
+		self.mover(self)
+		if(self.limiteDelVueloDelDisparo(self)){
 			self.remover(self)			
 		}		
 	}
 	
-	method disparar(elQueDispara) {
-		self.position(game.at(elQueDispara.position().x(), elQueDispara.position().y() +1)) 
+	method disparar(elQueDispara) {//este tambien se tiene que modificar
+		self.position(game.at(elQueDispara.position().x(), self.orientacionDelQueDispara(elQueDispara)))	
+	
 	}	
 	
-	method mover() {
-		const proxima = arriba.siguiente(self.position())
-		self.position(proxima)
-	}
+//	method mover() {
+//		const proxima = arriba.siguiente(self.position())
+//		self.position(proxima)
+//	}
 	//quiero testear que la nave colisiona con la bala pero la colion 
 		//se modifica con un msj
 	method colision(otro) {
-		otro.destruir()		
-		self.remover(self)
+//		otro.destruir()		
+//		self.remover(self)
+		self.comportamientoDeColision(otro)
 	}
 	
 	method remover(bala){
@@ -98,10 +105,57 @@ class Bala {
 	}
 	
 	method destruir(){
+		self.remover(self)
+		//esto si choca con otra bala
 		//hay que solucionar colision entre balas, si no salta error, esto sucede al disparar dos balas demasiado rapido
 	}
-}
+//	method comportamientoDeColision(otro) {
+//		otro.destruir()		
+//		self.remover(self)//este le puedo hacer un override y dejarlo en blanco creo
+//	}
 	
+	method limiteDelVueloDelDisparo(disparo)
+	method mover(disparo)
+	method comportamientoDeColision(otro)
+	method orientacionDelQueDispara(elQueDispara)
+	
+}
+class DisparoAliado inherits Bala {
+	override method limiteDelVueloDelDisparo(disparo){
+		return tablero.seFuePorArriba(disparo.position())
+	}
+	override method mover(disparo) {
+		const proxima = arriba.siguiente(disparo.position())
+		self.position(proxima)
+	}
+	
+	override method comportamientoDeColision(otro) {
+		otro.destruir()		
+		self.remover(self)//este le puedo hacer un override y dejarlo en blanco creo
+	}
+	
+	override method orientacionDelQueDispara(elQueDispara){
+		return elQueDispara.position().y() +1	
+	}
+}
+class DisparoEnemigo inherits Bala {
+	override method limiteDelVueloDelDisparo(disparo){
+		return tablero.seFuePorAbajo(disparo.position())
+	}
+	override method mover(disparo) {
+		const proxima = abajo.siguiente(disparo.position())
+		self.position(proxima)
+	}
+	override method comportamientoDeColision(otro) {
+		otro.destruirPlayer(self)		
+	//	self.remover(self)//solo quiero remover si colisiona con la naver
+		
+	}
+	override method orientacionDelQueDispara(elQueDispara){
+		return elQueDispara.position().y() -1	
+	}
+	
+}
 
 class Punto {
 	var property x
@@ -159,6 +213,8 @@ object balasManager {
 	method agregarTiro(tiro){
 		game.addVisual(tiro)		
 		encargadoDeSonidos.reproducir("disparo-normal.mp3")
+		// este comportamiento puede diferenciarse de una nave enemiga o una aliada.
+		//
 		tiro.disparar(barra)
 		game.onTick(tiro.velocidad(), tiro.identity().toString(), {tiro.actualizar()})		
 		game.onCollideDo(tiro, {other=> tiro.colision(other)})

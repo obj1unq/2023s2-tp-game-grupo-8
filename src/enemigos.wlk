@@ -5,6 +5,7 @@ import sonidos.*
 import mapa.*
 import tablero.*
 import randomizer.*
+import armas.*
 
 // Probar una posible herencia (Habria que pasar a clases)
 object flotaNivelUno {
@@ -133,7 +134,12 @@ class NaveBasica {
 		game.removeVisual(naveActual)
 		game.removeTickEvent("MovimientoEnemigo")
 	}
-
+	method disparar() {
+//		self.validarDisparar()
+		//esto se repite
+		creadorDeBalas.crearDisparoEnemigo(self)
+//		cantBalas -= 1
+	}
 }
 
 object volando {

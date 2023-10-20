@@ -18,6 +18,11 @@ object tablero {
 	method seFuePorArriba(position){
 		return position.y() > game.height()
 	}
+	
+	method seFuePorAbajo(position){
+		// llegoAlLimiteInferior() esto se parecen igual como que hay un bug
+		return position.y() == 1
+	}
 		
 }
 

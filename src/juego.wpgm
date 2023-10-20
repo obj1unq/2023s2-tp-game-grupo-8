@@ -12,16 +12,19 @@ program juego {
 	mapa.generar()
 	
 	//nivel2.generar()
-	//const nave = new NaveNivel2()//test
-	//game.addVisual(nave)//test
+	const nave0 = new NaveBasica(position = game.at(3,3))//test
+	const nave1 = new NaveBasica(position = game.at(3,5))//test
+	game.addVisual(nave0)//test
+	game.addVisual(nave1)
 	
+	keyboard.up().onPressDo({nave1.disparar()})
 	game.ground("bg.png")
 	selector.armas()
 	armas.mostrar()
 	
-  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
-  	game.onTick(100,"MovimientoEnemigo", {flotaNivelDos.mover()})
-  	
+//  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
+//  	game.onTick(100,"MovimientoEnemigo", {flotaNivelDos.mover()})
+//  	comento por el test
   	//Hay que hacer refactor y emproligar el codigo y cambiar los nombres
   	game.onTick(flotaNivelDos.tiempoDeGeneracion(), "e", {nivel2.generar()})  
   	
