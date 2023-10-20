@@ -18,6 +18,7 @@ program juego {
 	game.addVisual(nave1)
 	
 	keyboard.up().onPressDo({nave1.disparar()})
+	
 	game.ground("bg.png")
 	selector.armas()
 	armas.mostrar()
