@@ -85,6 +85,7 @@ class Bala {
 	method disparar(elQueDispara) {//este tambien se tiene que modificar
 		self.position(game.at(elQueDispara.position().x(), self.orientacionDelQueDispara(elQueDispara)))	
 	
+	
 	}	
 	
 //	method mover() {
