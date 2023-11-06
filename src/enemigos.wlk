@@ -12,7 +12,7 @@ import estrategiasDeDestruccion.*
 // Probar una posible herencia (Habria que pasar a clases)
 object flotaNivelUno {
 
-	var property enemigos = []
+	const property enemigos = []
 
 	method agregar(enemigo) {
 		enemigos.add(enemigo)

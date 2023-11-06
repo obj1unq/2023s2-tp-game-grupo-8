@@ -7,6 +7,23 @@ import mapa.*
 import wollok.game.*
 import direcciones.*
 
+
+class NaveDePrueba {
+	var property fueMovida = false
+	const property animacion
+	method mover(){
+		fueMovida = true
+	}
+}
+
+class AnimacionDePrueba{
+	var property fueIniciada = false
+	
+	method iniciar(){
+		fueIniciada = true
+	}
+}
+
 describe "funcionalidadDelJuego"{
 	
 	method initialize(){
@@ -17,23 +34,6 @@ describe "funcionalidadDelJuego"{
 		
 		encargadoDeSonidos.modoTest(true)
 	
-	}
-	test "destruccionDeNaveEnemigaPorBala"{
-
-		creadorDeBalas.crear()
-		
-		const bala = game.allVisuals().first()
-	
-		const naveEnemiga = new NaveBasica(position = game.at(5,5),direccion = null)
-		game.addVisual(naveEnemiga)
-		//barra.position(game.at(5,1))
-		
-
-		
-		bala.colision(naveEnemiga)
-		
-		//assert.that(naveEnemiga.estado() == destruida)
-	//	assert.notThat(game.allVisuals().contains(bala))
 	}
 	
   	test "nave enemiga se mueve cumpliendo la animacion" {
@@ -56,41 +56,30 @@ describe "funcionalidadDelJuego"{
 	
 }
 
+
 describe "FlotaNivelUno" {
 	
+	const animacionDePrueba = new AnimacionDePrueba()
+	const naveDePrueba = new NaveDePrueba(animacion = animacionDePrueba)
+	
 	method initialize(){
-		game.clear()
-		game.cellSize(20)
-		game.width(40)
-		game.height(30)
-		
-		encargadoDeSonidos.modoTest(true)
-	
+		flotaNivelUno.agregar(naveDePrueba)
 	}
 	
-	test "estaMuerta" {
-		mapa.generar()
-		assert.equals(16, flotaNivelUno.enemigos().size()) // depende de las naves enemigas que se agrueguen en el mapa.
-		flotaNivelUno.enemigos().first().destruir()
-		assert.equals(15, flotaNivelUno.enemigos().size())
-		assert.notThat(flotaNivelUno.estaMuerta())
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		flotaNivelUno.enemigos().first().destruir()
-		assert.equals(0, flotaNivelUno.enemigos().size())
+	test "No está muerta si tiene naves" {				
+		assert.notThat(flotaNivelUno.estaMuerta())		
+		assert.that(animacionDePrueba.fueIniciada())
+	}
+	
+	test "Está muerta si no tiene naves" {				
+		flotaNivelUno.remover(naveDePrueba)
 		assert.that(flotaNivelUno.estaMuerta())
+		//assert.that(naveDePrueba.fueDestruida())
 	}
 	
+	test "Mueve a las naves de la flota" {
+		assert.notThat(naveDePrueba.fueMovida())
+		flotaNivelUno.mover()
+		assert.that(naveDePrueba.fueMovida())
+	}
 }
