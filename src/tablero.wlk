@@ -1,7 +1,4 @@
 import wollok.game.*
-import armas.*
-import qalaga.*
-
 object tablero {
 
 	method pertenece(position) {

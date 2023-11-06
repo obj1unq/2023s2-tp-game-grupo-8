@@ -32,6 +32,13 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.uqbar.project.wollok.wollokNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/sonidos.wlk</name>
+			<type>1</type>
+			<location>C:/Users/leandro.correa/git/2023s2-tp-game-grupo-8/src/sonidos.wlk</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1695656189621</id>

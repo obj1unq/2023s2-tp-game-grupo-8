@@ -1,6 +1,4 @@
 import wollok.game.*
-import qalaga.*
-import direcciones.*
 
 object encargadoDeSonidos {
 	
