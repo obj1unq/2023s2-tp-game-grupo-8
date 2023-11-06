@@ -1,5 +1,4 @@
 import wollok.game.*
-import enemigos.*
 object randomizer {
 		
 	method position() {

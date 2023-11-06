@@ -1,6 +1,4 @@
 import wollok.game.*
-import qalaga.*
-
 object derecha {
 
 	method siguiente(position) {

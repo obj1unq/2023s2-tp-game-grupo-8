@@ -1,38 +1,5 @@
-import wollok.game.*
-import qalaga.*
-import direcciones.*
-import enemigos.*
-import sonidos.*
-import armas.*
-import tablero.*
-import mapa.*
+import escenas.escenasManager
 
 program juego {
-
-	mapa.generar()
-	
-	//nivel2.generar()
-	//const nave = new NaveNivel2()//test
-	//game.addVisual(nave)//test
-	
-	game.ground("bg.png")
-	selector.armas()
-	armas.mostrar()
-	
-  	game.onTick(100,"MovimientoEnemigo", {flotaNivelUno.mover()})
-  	game.onTick(100,"MovimientoEnemigo", {flotaNivelDos.mover()})
-  	
-  	//Hay que hacer refactor y emproligar el codigo y cambiar los nombres
-  	game.onTick(flotaNivelDos.tiempoDeGeneracion(), "e", {nivel2.generar()})  
-  	
-  	game.onCollideDo(barra, {enemigo => enemigo.colision(barra)})
-	keyboard.left().onPressDo({barra.mover(izquierda)})
-	keyboard.right().onPressDo({barra.mover(derecha)})
-		
-	keyboard.space().onPressDo({
-		barra.disparar()
-	})
-	
-	game.start()
+	escenasManager.iniciarJuego()	
 }
-

@@ -1,10 +1,13 @@
 import wollok.game.*
-import qalaga.*
+import jugador.*
+import tablero.*
+import animacion.*
 import direcciones.*
 import sonidos.*
 import mapa.*
-import tablero.*
 import randomizer.*
+import animacion.*
+import estrategiasDeDestruccion.*
 
 // Probar una posible herencia (Habria que pasar a clases)
 object flotaNivelUno {
@@ -13,6 +16,7 @@ object flotaNivelUno {
 
 	method agregar(enemigo) {
 		enemigos.add(enemigo)
+		enemigo.animacion().iniciar()
 	}
 
 	method mover() {
@@ -58,10 +62,11 @@ class NaveNivel2 {
 
 	var property position = game.at(0, game.height() - 1)
 	var property direccion = abajo
-	var property estado = volando
+	//var property estado = volando
 
 	method image() {
-		return estado.image()
+		return"" 
+		//estado.image()
 	}
 
 	method mover() {
@@ -79,13 +84,14 @@ class NaveNivel2 {
 }
 
 class NaveBasica {
-
+	const objetivo = jugador
 	var property position
-	var property direccion = derecha
-	var property estado = volando
+	var property direccion = derecha	
+	var property animacion = new AnimacionEnemigo()
+	var property estrategiaDeDestruccion = new PuedeSerDestruida()
 
 	method image() {
-		return estado.image()
+		return animacion.image()
 	}
 
 	method mover() {
@@ -115,40 +121,21 @@ class NaveBasica {
 
 	method debeGirar() = self.position().x() >= game.width() - 10 || self.position().x() <= 10
 
-	method colision(algo) { // colision.refactori
-		self.destruir()
-		algo.destruir() // aca quedaria bien un power up de invencible 
-		self.remover(self)
+	method colision(algo) { 
+		//Solo destruye al objetivo
+		if(algo == objetivo){
+			self.destruir()
+			objetivo.destruir() // aca quedaria bien un power up de invencible
+		}
 	}
 
 	method destruir() {
-		score.aumentarPuntos()
-		self.estado(destruida)
-		flotaNivelUno.remover(self)
-		game.schedule(100, { game.removeVisual(self)})
-		encargadoDeSonidos.reproducir("esplosion.mp3")
+		estrategiaDeDestruccion.ejecutar(self)
+	}	
+	
+	method animarDestruccion(){
+		animacion.detener()
+		animacion = new Destruccion()
+		animacion.iniciar()
 	}
-
-	method remover(naveActual) {
-		game.removeVisual(naveActual)
-		game.removeTickEvent("MovimientoEnemigo")
-	}
-
 }
-
-object volando {
-
-	method image() {
-		return "nave1.png"
-	}
-
-}
-
-object destruida {
-
-	method image() {
-		return "esplosion.png"
-	}
-
-}
-

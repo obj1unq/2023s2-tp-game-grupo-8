@@ -1,12 +1,27 @@
 import wollok.game.*
 import enemigos.*
-import qalaga.*
+import jugador.*
 import armas.*
 import randomizer.*
 import direcciones.*
 import tablero.*
+import logo.logo
+import animacion.*
+import escenas.*
 
-
+class Mapa{
+	
+	method celdas()
+	
+	method generar(){
+		(0 .. game.width() - 1).forEach({ x => (0 .. game.height() - 1).forEach({ y => self.generarCelda(x, y)})})
+	}
+	
+	method generarCelda(x, y) {
+		const celda = self.celdas().get(y).get(x)
+		celda.generar(game.at(x, y))
+	}
+}
 
 object nivel {
 	const property estado = mapa
@@ -55,17 +70,16 @@ object r { // Selector de armas
 object b { // Nave principal
 
 	method generar(position) {
-		barra.position(position)
-		game.addVisual(barra)
+		jugador.position(position)
+		game.addVisual(jugador)
 	}
 	
 }
 
-object mapa {
 
-	const property estado = self
-	
-	var celdas = [
+
+object mapa inherits Mapa {	
+	override method celdas() = [
 		[_,_,_,_,_,s,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,n,n,n,n,n,n,n,_,_],
@@ -83,19 +97,10 @@ object mapa {
 	].reverse() //reverse porque el y crece en el orden inverso
 	
 	
-	method generar() {
-		game.width(celdas.anyOne().size())
-		game.height(celdas.size())
-		game.cellSize(50)
-		(0 .. game.width() - 1).forEach({ x => (0 .. game.height() - 1).forEach({ y => self.generarCelda(x, y)})})
-		
+	override method generar() {		
+		super()		
 		game.addVisual(selector)  // se instancia el selector 
-	}
-
-	method generarCelda(x, y) {
-		const celda = celdas.get(y).get(x)
-		celda.generar(game.at(x, y))
-	}
+	}	
 	
 }
 
@@ -103,10 +108,90 @@ object nivel2{
 	const property estado = self
 	method generar(){
 		if (flotaNivelUno.estaMuerta()) {			
+			game.removeTickEvent("MovimientoEnemigo")			
 			const enemigo = new NaveNivel2(position = randomizer.emptyPosition())
 			game.addVisual(enemigo)
-			flotaNivelDos.agregar(enemigo)
+			//flotaNivelDos.agregar(enemigo)
 		}
+	}
+}
+
+object m { // menu
+	const background = new AnimacionMenuPrincipal()
+	method generar(position) {
+		game.addVisual(background)
+		background.position(position)
+		background.iniciar()
+	}
+	
+	method finalizarMenu(){
+		background.detener()
+	}
+}
+
+object mapaMenu inherits Mapa{
+	override method celdas() = [
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,p,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[m,_,_,_,_,_,_,_,_,_,_]
+	].reverse()
+	
+	
+	override method generar() {
+		super()	
+		keyboard.enter().onPressDo({
+			m.finalizarMenu()
+			escenasManager.cambiarEscenaA(nivelUno)
+		})
+	}
+	
+}
+
+object pressStart {
+	var property image = "press-start.png"
+	var property position
+}
+
+object p { // menu	
+	method generar(position) {
+		game.addVisual(pressStart)
+		pressStart.position(position)
+	}	
+}
+
+object ventana {
+	const celdas = [
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_]
+	]
+	
+	method iniciar(){
+		game.width(celdas.anyOne().size())
+		game.height(celdas.size())
+		game.cellSize(50)
 	}
 }
 
