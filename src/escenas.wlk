@@ -21,8 +21,7 @@ object nivelUno inherits Escena {
 	
 	override method iniciarEscena() {
 		mapa.generar()
-		selector.inicializar()
-		armas.mostrar()
+		selector.inicializar()		
 		game.onTick(100, "MovimientoEnemigo", { flotaNivelUno.mover()})
 		game.onCollideDo(jugador, { enemigo => enemigo.colision(jugador)})
 		keyboard.left().onPressDo({ jugador.mover(izquierda)})
@@ -38,7 +37,7 @@ object menuPrincipal inherits Escena {
 }
 
 object escenasManager {
-	const escenaInicial = menuPrincipal
+	const escenaInicial = nivelUno
 	method iniciarJuego(){
 		ventana.iniciar()
 		escenaInicial.iniciar()

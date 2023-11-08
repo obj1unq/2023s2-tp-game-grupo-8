@@ -7,7 +7,6 @@ import armas.*
 
 object jugador {
 	var property position = game.at(20, 1)
-	var property arma = armaBalistica     
 	var property cantBalas = 18
 	var property creadorDeBala = creadorDeBalas
   

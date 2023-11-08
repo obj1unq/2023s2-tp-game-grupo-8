@@ -13,9 +13,6 @@ class RecuadroArma {
 		return "recuadroArma.png"
 	}
 	
-	method seleccionar(nave) {
-		//necesario para que no rompa
-	}
 
 }
 
@@ -39,9 +36,8 @@ object selector {
 			self.activarTiroTriple()
 		})
 		keyboard.num3().onPressDo({self.position(recuadrosPosition.get(2))})
-		keyboard.num4().onPressDo({self.position(recuadrosPosition.get(3))})
+		keyboard.num4().onPressDo({self.position(recuadrosPosition.get(3))})	
 		
-		game.onCollideDo(self, {arma => arma.seleccionar(jugador)})
 	}
 	
 	method activarBalaSimple(){
@@ -53,60 +49,6 @@ object selector {
 		self.position(recuadrosPosition.get(1))
 		jugador.creadorDeBala(creadorDeTiroTriple)
 	}
-}
-
-object armas {
-	method mostrar()  {
-		game.addVisual(armaBalistica)
-		game.addVisual(laser)
-		game.addVisual(misil)
-		game.addVisual(armaDeParticulas)
-	}
-}
-
-object armaBalistica {
-	
-	const property position = game.at(0, 0)
-	const property image = "armaBalistica.png"
-	
-	method seleccionar(nave) {
-		nave.arma(self)
-	}
-}
-
-object laser {
-	
-	const property position = game.at(1, 0)
-	const property image = "armaBalistica.png"
-	
-	method seleccionar(nave) {
-		nave.arma(self)
-	}
-	
-
-}
-
-object misil {
-	
-	const property position = game.at(2, 0)
-	const property image = "armaBalistica.png"
-	
-	method seleccionar(nave) {
-		nave.arma(self)
-	}
-	
-
-}
-
-object armaDeParticulas {
-	
-	const property position = game.at(3, 0)
-	const property image = "armaBalistica.png"
-	
-	method seleccionar(nave) {
-		nave.arma(self)
-	}
-
 }
 
 object creadorDeBalas{

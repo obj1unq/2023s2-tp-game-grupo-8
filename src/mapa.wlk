@@ -93,7 +93,7 @@ object mapa inherits Mapa {
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],		
 		[_,_,_,_,_,b,_,_,_,_,_],		
-		[r,r,r,r,_,_,_,_,_,_,_]
+		[r,r,_,_,_,_,_,_,_,_,_]
 	].reverse() //reverse porque el y crece en el orden inverso
 	
 	
