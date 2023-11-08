@@ -5,9 +5,8 @@ import animacion.*
 import direcciones.*
 import sonidos.*
 import mapa.*
-import randomizer.*
 import animacion.*
-import estrategiasDeDestruccion.*
+import estadosDestruccion.*
 
 object flotaNivelUno {
 
@@ -36,7 +35,7 @@ class NaveBasica {
 	var property position
 	var property direccion = derecha	
 	var property animacion = new AnimacionEnemigo()
-	var property estrategiaDeDestruccion = new PuedeSerDestruida()
+	var property estadoDestruccion = new PuedeSerDestruida()
 
 	method image() {
 		return animacion.image()
@@ -78,7 +77,7 @@ class NaveBasica {
 	}
 
 	method destruir() {
-		estrategiaDeDestruccion.ejecutar(self)
+		estadoDestruccion.ejecutar(self)
 	}	
 	
 	method animarDestruccion(){

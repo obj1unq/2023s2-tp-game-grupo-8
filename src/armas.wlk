@@ -68,11 +68,9 @@ object creadorDeBalas{
 
 object creadorDeTiroTriple{
 	method crear(){
-		var vectores = [
-			new Punto(x= 0.5, y = 1),
+		var vectores = [			
 			new Punto(x= 1, y = 1),
-			new Punto(x= 0, y = 1),
-			new Punto(x= -0.5, y = 1),
+			new Punto(x= 0, y = 1),			
 			new Punto(x= -1, y = 1)
 		]
 		var balas = vectores.map({vector=> new TiroTriple(movimiento = vector)})
@@ -90,7 +88,7 @@ class Bala {
 	method actualizar() {
 		self.mover()
 		if(tablero.seFuePorArriba(self.position())){
-			self.remover(self)			
+			self.remover()			
 		}		
 	}
 	
@@ -106,12 +104,12 @@ class Bala {
 		//se modifica con un msj
 	method colision(otro) {
 		otro.destruir()		
-		self.remover(self)
+		self.remover()
 	}
 	
-	method remover(bala){
-		game.removeVisual(bala)
-		game.removeTickEvent(bala.identity().toString())		
+	method remover(){
+		game.removeVisual(self)
+		game.removeTickEvent(self.identity().toString())		
 	}
 	
 	method destruir(){

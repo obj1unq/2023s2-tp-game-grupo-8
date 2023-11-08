@@ -13,7 +13,7 @@ class PuedeSerDestruida{
 			colisionable.animacion().detener()
 		})
 		encargadoDeSonidos.reproducir("esplosion.mp3")
-		colisionable.estrategiaDeDestruccion(new EnDestruccion())
+		colisionable.estadoDestruccion(new EnDestruccion())
 	}
 }
 

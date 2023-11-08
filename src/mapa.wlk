@@ -2,7 +2,6 @@ import wollok.game.*
 import enemigos.*
 import jugador.*
 import armas.*
-import randomizer.*
 import direcciones.*
 import tablero.*
 import logo.logo
@@ -102,18 +101,6 @@ object mapa inherits Mapa {
 		game.addVisual(selector)  // se instancia el selector 
 	}	
 	
-}
-
-object nivel2{
-	const property estado = self
-	method generar(){
-		if (flotaNivelUno.estaMuerta()) {			
-			game.removeTickEvent("MovimientoEnemigo")			
-			const enemigo = new NaveNivel2(position = randomizer.emptyPosition())
-			game.addVisual(enemigo)
-			//flotaNivelDos.agregar(enemigo)
-		}
-	}
 }
 
 object m { // menu
