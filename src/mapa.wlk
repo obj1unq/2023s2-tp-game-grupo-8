@@ -4,7 +4,6 @@ import jugador.*
 import armas.*
 import direcciones.*
 import tablero.*
-import logo.logo
 import animacion.*
 import escenas.*
 
@@ -22,13 +21,6 @@ class Mapa{
 	}
 }
 
-object nivel {
-	const property estado = mapa
-	
-	method generar(){
-		estado.generar()
-	}
-}
 object _ { // Objetos vacios
 
 	method generar(position) {

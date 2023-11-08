@@ -4,7 +4,6 @@ import armas.*
 import enemigos.*
 import jugador.*
 import direcciones.*
-import logo.*
 
 class Escena {
 
