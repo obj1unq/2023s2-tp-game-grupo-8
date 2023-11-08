@@ -7,8 +7,7 @@ import armas.*
 
 object jugador {
 	var property position = game.at(20, 1)
-	var property arma = armaBalistica     
-	var property cantBalas = 18
+	var property cantBalas = 50
 	var property creadorDeBala = creadorDeBalas
   
 	method image(){
@@ -25,6 +24,7 @@ object jugador {
 			self.error("warning,limite de la batalla")
 		}
 	}
+	
 	method disparar() {
 		self.validarDisparar()
 		creadorDeBala.crear()
@@ -46,30 +46,12 @@ object jugador {
 	}
 	
 	method destruir(){		
-		game.removeVisual(self)//aca quedaria bien un power up de invencible 
-		//estrategiaDeDestruccion.ejecutarDestruccion()
-		//class Indestructible
-		//const estrategiaPrevia
-		//const colisionable 
-		//method ejecutar(){NO HACE NADA}
-		//method terminar()
-		//colisionable.estrategiaDeDestruccion(estrategiaPrevia)
-		//object powerUpInvencible
-		//method aplicar(jugador) 
-		// const indestructible = new Indestructible(colisionable=jugador, estrategiaPrevia=jugador.estrategiaDeDestruccion)
-		//jugador.estrategiaDeDestruccion(indestructible)
-		//game.schedule(tiempoPowerUp, {indestructible.terminar()} 
+		game.removeVisual(self) 
 	}
 	
 	method colision(otro) {
-		otro.destruir()		
-		self.remover(self)
-	}
-	
-	method remover(_bala){
-//		game.removeVisual(_bala)
-//		game.removeTickEvent(bala.identity().toString())		
-	}
+		otro.destruir()
+	}	
 }
 
 

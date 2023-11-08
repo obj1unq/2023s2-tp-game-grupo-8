@@ -2,10 +2,8 @@ import wollok.game.*
 import enemigos.*
 import jugador.*
 import armas.*
-import randomizer.*
 import direcciones.*
 import tablero.*
-import logo.logo
 import animacion.*
 import escenas.*
 
@@ -23,13 +21,6 @@ class Mapa{
 	}
 }
 
-object nivel {
-	const property estado = mapa
-	
-	method generar(){
-		estado.generar()
-	}
-}
 object _ { // Objetos vacios
 
 	method generar(position) {
@@ -93,7 +84,7 @@ object mapa inherits Mapa {
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],		
 		[_,_,_,_,_,b,_,_,_,_,_],		
-		[r,r,r,r,_,_,_,_,_,_,_]
+		[r,r,_,_,_,_,_,_,_,_,_]
 	].reverse() //reverse porque el y crece en el orden inverso
 	
 	
@@ -102,18 +93,6 @@ object mapa inherits Mapa {
 		game.addVisual(selector)  // se instancia el selector 
 	}	
 	
-}
-
-object nivel2{
-	const property estado = self
-	method generar(){
-		if (flotaNivelUno.estaMuerta()) {			
-			game.removeTickEvent("MovimientoEnemigo")			
-			const enemigo = new NaveNivel2(position = randomizer.emptyPosition())
-			game.addVisual(enemigo)
-			//flotaNivelDos.agregar(enemigo)
-		}
-	}
 }
 
 object m { // menu

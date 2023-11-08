@@ -5,11 +5,9 @@ import animacion.*
 import direcciones.*
 import sonidos.*
 import mapa.*
-import randomizer.*
 import animacion.*
-import estrategiasDeDestruccion.*
+import estadosDestruccion.*
 
-// Probar una posible herencia (Habria que pasar a clases)
 object flotaNivelUno {
 
 	const property enemigos = []
@@ -30,57 +28,6 @@ object flotaNivelUno {
 	method estaMuerta() {
 		return enemigos.isEmpty()
 	}
-
-}
-
-object flotaNivelDos {
-
-	const property enemigos = []
-
-	method agregar(enemigo) {
-		enemigos.add(enemigo)
-	}
-
-	method mover() {
-		enemigos.forEach({ nave => nave.mover()})
-	}
-
-	method tiempoDeGeneracion() {
-		return if (score.puntos() < 2000) {
-			2000
-		} else if (score.puntos().beetwen(2000, 3000)) {
-			1500
-		} else {
-			1000
-		}
-	}
-
-}
-
-//Crear una naveEnemiga y despues usar herencia
-class NaveNivel2 {
-
-	var property position = game.at(0, game.height() - 1)
-	var property direccion = abajo
-	//var property estado = volando
-
-	method image() {
-		return"" 
-		//estado.image()
-	}
-
-	method mover() {
-		const proxima = direccion.siguiente(self.position())
-		if (self.llegoAlLimiteInferior()) {
-			game.removeVisual(self)
-		}
-		self.position(proxima)
-	}
-
-	method llegoAlLimiteInferior() {
-		return self.position().y() == 1
-	}
-
 }
 
 class NaveBasica {
@@ -88,7 +35,7 @@ class NaveBasica {
 	var property position
 	var property direccion = derecha	
 	var property animacion = new AnimacionEnemigo()
-	var property estrategiaDeDestruccion = new PuedeSerDestruida()
+	var property estadoDestruccion = new PuedeSerDestruida()
 
 	method image() {
 		return animacion.image()
@@ -125,12 +72,12 @@ class NaveBasica {
 		//Solo destruye al objetivo
 		if(algo == objetivo){
 			self.destruir()
-			objetivo.destruir() // aca quedaria bien un power up de invencible
+			objetivo.destruir() 
 		}
 	}
 
 	method destruir() {
-		estrategiaDeDestruccion.ejecutar(self)
+		estadoDestruccion.ejecutar(self)
 	}	
 	
 	method animarDestruccion(){
