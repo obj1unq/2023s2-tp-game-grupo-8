@@ -36,7 +36,7 @@ object menuPrincipal inherits Escena {
 }
 
 object escenasManager {
-	const escenaInicial = nivelUno
+	const escenaInicial = new GameOver()//menuPrincipal//nivelUno
 	method iniciarJuego(){
 		ventana.iniciar()
 		escenaInicial.iniciar()
@@ -47,4 +47,11 @@ object escenasManager {
 		game.clear()
 		escena.iniciar()
 	}
+}
+class GameOver inherits Escena{
+	//const property puntuacion
+	override method iniciarEscena() {
+		gameOver.generar()		
+	}
+	
 }
