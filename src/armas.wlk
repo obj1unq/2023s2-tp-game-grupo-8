@@ -28,31 +28,55 @@ object selector {
 	}
 	
 	method inicializar() {
-		self.activarBalaSimple()
+		self.aniadirVisuales()
+		self.activarBala(creadorDeBalas)
 		keyboard.num1().onPressDo({
-			self.activarBalaSimple()
+			self.activarBala(creadorDeBalas)
 		})
 		keyboard.num2().onPressDo({
-			self.activarTiroTriple()
+			self.activarBala(creadorDeTiroTriple)
 		})
-		keyboard.num3().onPressDo({self.position(recuadrosPosition.get(2))})
-		keyboard.num4().onPressDo({self.position(recuadrosPosition.get(3))})	
 		
 	}
 	
-	method activarBalaSimple(){
-		self.position(recuadrosPosition.get(0))
-		jugador.creadorDeBala(creadorDeBalas)
+	method aniadirVisuales() {
+		self.aniadirCreadorBala(creadorDeBalas)
+		self.aniadirCreadorBala(creadorDeTiroTriple)
 	}
 	
-	method activarTiroTriple(){
-		self.position(recuadrosPosition.get(1))
-		jugador.creadorDeBala(creadorDeTiroTriple)
+	method aniadirCreadorBala(creador) {
+		creador.position(self.positionPara(creador))
+		game.addVisual(creador)
 	}
+	
+	
+	method activarBala(creador){
+		self.position(self.positionPara(creador))
+		jugador.creadorDeBala(creador)
+	}
+	
+	method positionPara(creador) {
+		return recuadrosPosition.get(creador.indice())
+	}
+	
+	
 }
 
-object creadorDeBalas{
-	method crear(){
+class CreadorDeBala {
+	var property position = null
+	
+	method crear()
+	
+	method image() {
+		return ".png"
+	}
+	
+	method indice()
+}
+
+object creadorDeBalas inherits CreadorDeBala {
+	
+	override method crear(){
 		const bala = new Bala()
 		
 		if(not game.allVisuals().any({v=> v == bala})) {			
@@ -64,10 +88,18 @@ object creadorDeBalas{
 		}
 	}
 	
+	override method image() {
+		return "bala" + super()
+	}
+	
+	override method indice(){
+		return 0
+	}
+	
 }
 
-object creadorDeTiroTriple{
-	method crear(){
+object creadorDeTiroTriple inherits CreadorDeBala{
+	override method crear(){
 		var vectores = [			
 			new Punto(x= 1, y = 1),
 			new Punto(x= 0, y = 1),			
@@ -75,7 +107,15 @@ object creadorDeTiroTriple{
 		]
 		var balas = vectores.map({vector=> new TiroTriple(movimiento = vector)})
 		balasManager.registrarBalas(balas)		
-	}		
+	}
+	
+	override method image() {
+		return "bala_triple" + super()
+	}
+	
+	override method indice(){
+		return 1
+	}	
 }
 
 
