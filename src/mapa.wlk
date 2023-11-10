@@ -136,11 +136,66 @@ object mapaMenu inherits Mapa{
 	}
 	
 }
+object gameOver inherits Mapa{
+	override method celdas() = [
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,g,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,s,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,p,_,_,_,_,_,_,_],		
+		[_,_,_,e,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_]
+	].reverse()
+	override method generar() {
+		super()	
+		keyboard.enter().onPressDo({//iniciar de nuevo y un esc para salir del juego
+			//m.finalizarMenu()
+			escenasManager.cambiarEscenaA(nivelUno)
+		})
+		keyboard.alt().onPressDo({
+			//escenasManager.cambiarEscenaA(nivelUno)
+			game.stop()
+		})
+	}
+	
+}
+
+object g {
+	method generar(position) {
+		game.addVisual(gameOverImg)
+		gameOverImg.position(position)
+	}
+}
+
+object e { // esc
+	method generar(position) {
+		game.addVisual(pressExit)
+		pressExit.position(position)
+	}	
+}
+object gameOverImg{
+	var property image = "game_Over_logo.png"
+	var property position
+}
+
+object pressExit {//cambiarle la imagen
+	var property image = "press-start.png"
+	var property position
+}
 
 object pressStart {
 	var property image = "press-start.png"
 	var property position
 }
+
+
 
 object p { // menu	
 	method generar(position) {
@@ -148,6 +203,7 @@ object p { // menu
 		pressStart.position(position)
 	}	
 }
+
 
 object ventana {
 	const celdas = [
