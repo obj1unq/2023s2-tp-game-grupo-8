@@ -79,7 +79,7 @@ object mapa inherits Mapa {
 		[_,_,_,_,_,n,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,o,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],		
@@ -94,23 +94,6 @@ object mapa inherits Mapa {
 		
 	}	
 	
-}
-
-object o {
-	method generar(position) {
-		game.addVisual(presentacionDeOleada)
-		presentacionDeOleada.position(position)
-		game.schedule(1000, { 
-			game.removeVisual(presentacionDeOleada)
-		})
-	}
-}
-object presentacionDeOleada {
-		const property image = "press-start.png"
-		var property position
-		
-		
-		
 }
 
 object m { // menu
@@ -184,7 +167,54 @@ object gameOver inherits Mapa{
 	}
 	
 }
+class PantallaDeOleada inherits Mapa{
+	const property oleada 
+	override method celdas() = [
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,o,_,_,_,_,l,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_]
+	].reverse()
+	override method generar() {
+		l.proxima(oleada)
+		super()	
+		
+	}
+}
+object o {
+	method generar(position) {
+		game.addVisual(oleada)
+		oleada.position(position)
+	}
+}
+object l{//es el nro de la proxima oleada
+	
+	var property proxima
+	method generar(position) {
+		const visualNroDeOleada = new VisualNroDeOleada(oleadaActual=proxima,position=position)
+		game.addVisual(visualNroDeOleada)
+	}
+}
+object oleada {
+	var property image = "oleada.png"
+	var property position
+}
 
+class VisualNroDeOleada{
+	var property oleadaActual
+	var property image = oleadaActual.toString()+".png"
+	var property position
+}
 object g {
 	method generar(position) {
 		game.addVisual(gameOverImg)
@@ -203,7 +233,7 @@ object gameOverImg{
 	var property position
 }
 
-object pressExit {//cambiarle la imagen
+object pressExit {//cambiarle imagen a alt para salir
 	var property image = "press-start.png"
 	var property position
 }
