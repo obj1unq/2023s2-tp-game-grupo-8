@@ -79,7 +79,7 @@ object mapa inherits Mapa {
 		[_,_,_,_,_,n,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,o,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],		
@@ -91,8 +91,26 @@ object mapa inherits Mapa {
 	override method generar() {		
 		super()		
 		game.addVisual(selector)  // se instancia el selector 
+		
 	}	
 	
+}
+
+object o {
+	method generar(position) {
+		game.addVisual(presentacionDeOleada)
+		presentacionDeOleada.position(position)
+		game.schedule(1000, { 
+			game.removeVisual(presentacionDeOleada)
+		})
+	}
+}
+object presentacionDeOleada {
+		const property image = "press-start.png"
+		var property position
+		
+		
+		
 }
 
 object m { // menu
