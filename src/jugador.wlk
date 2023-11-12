@@ -3,6 +3,7 @@ import wollok.game.*
 import direcciones.*
 import sonidos.*
 import armas.*
+import escenas.*
 
 
 object jugador {
@@ -51,6 +52,10 @@ object jugador {
 	
 	method colision(otro) {
 		otro.destruir()
+	}
+	
+	method perder() {
+		escenasManager.cambiarEscenaA(new GameOver())
 	}	
 }
 

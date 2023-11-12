@@ -37,7 +37,7 @@ object menuPrincipal inherits Escena {
 
 object escenasManager {
 
-	const escenaInicial = new EscenaDePresentacionDeOleada()//menuPrincipal//nivelUno
+	const escenaInicial = nivelUno//menuPrincipal//nivelUno
 
 	method iniciarJuego(){
 		ventana.iniciar()
