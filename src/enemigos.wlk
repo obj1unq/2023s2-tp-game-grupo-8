@@ -72,7 +72,8 @@ class NaveBasica {
 		//Solo destruye al objetivo
 		if(algo == objetivo){
 			self.destruir()
-			objetivo.destruir() 
+			objetivo.destruir()
+			objetivo.perder()
 		}
 	}
 
