@@ -28,7 +28,7 @@ class AnimacionEnemigo inherits Animacion{
 		if(frame > 6){
 			frame = 1
 		}
-		self.image("enemigo-"+frame+".png")
+		self.image("enemigo-"+frame.toString()+".png")
 	}
 	
 	override method detener(){
@@ -73,7 +73,7 @@ class AnimacionMenuPrincipal inherits Animacion {
 		if(frame > 8){
 			frame = 1
 		}
-		self.image("menu-"+frame+".png")
+		self.image("menu-"+frame.toString()+".png")
 	}
 	
 	override method detener(){

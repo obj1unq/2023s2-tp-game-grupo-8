@@ -19,6 +19,7 @@ object tablero {
 }
 
 object score{
+	var oleadaActual = 1
 	var property position
 	var property puntos = 0 //1200
 	
@@ -32,6 +33,19 @@ object score{
 	
 	method destruir(){
 		
+	}
+	
+	method avanzarOleada(){
+		oleadaActual++;
+	}
+	
+	method oleadaActual(){
+		return oleadaActual
+	}
+	
+	method resetear(){
+		oleadaActual = 1
+		puntos = 0
 	}
 
 }
