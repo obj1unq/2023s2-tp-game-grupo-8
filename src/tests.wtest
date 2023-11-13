@@ -64,6 +64,7 @@ describe "flotaEnemiga" {
 	
 	method initialize(){
 		flotaEnemiga.agregar(naveDePrueba)
+		flotaEnemiga.ejecutarAlMorir({})
 	}
 	
 	test "No está muerta si tiene naves" {				
