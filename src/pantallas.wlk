@@ -151,16 +151,20 @@ object gameOver inherits Pantalla{
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,g,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,s,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,p,_,_,_,_,_,_,_],		
-		[_,_,_,e,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_],		
+		[_,_,_,_,_,_,_,_,_,_,_],		
 		[_,_,_,_,_,_,_,_,_,_,_]
 	].reverse()
 	override method generar() {
-		super()	
+		//super()	
+		
+		escritor.lineaPara(new Mensaje(posicion = 12, texto = "GAME OVER"))
+		escritor.lineaPara(new Mensaje(posicion = 10, texto = "SCORE"))
+		escritor.lineaPara(new Mensaje(posicion = 9, texto = score.puntos().toString()))
 		keyboard.enter().onPressDo({//iniciar de nuevo y un esc para salir del juego
 			//m.finalizarMenu()
 			score.resetear()
@@ -283,4 +287,33 @@ object ventana {
 		game.cellSize(50)
 		game.ground("bg.png")
 	}
+}
+
+object escritor{
+	const celdasDisponibles = 11
+	method lineaPara(mensaje){
+		const y = mensaje.posicion()
+		var x = (celdasDisponibles - mensaje.texto().length()) / 2 
+		(0..(mensaje.texto().length() -1)).forEach({
+			index=> 
+				if(mensaje.texto().charAt(index) != " "){
+					game.addVisual(new Letra(letra = mensaje.texto().charAt(index), position =  game.at(x, y)))					
+				}				
+				x = x +1
+		})
+		//(0..mensaje.texto().length()-1)).map({index => mensaje.texto().c})
+		
+		//.forEach({index=> game.addVisual(new Letra(letra= mensaje.texto().charAt(index), position =  game.at(x, y)))})
+	}
+}
+
+class Mensaje{
+	const property posicion
+	const property texto
+}
+
+class Letra{
+	const letra
+	const property position
+	const property image = letra + ".png"	
 }
