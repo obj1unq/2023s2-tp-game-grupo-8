@@ -3,7 +3,7 @@ import armas.*
 import jugador.*
 import enemigos.*
 import tablero.*
-import mapa.*
+import pantallas.*
 import wollok.game.*
 import direcciones.*
 
@@ -32,12 +32,12 @@ describe "funcionalidadDelJuego"{
 		game.width(40)
 		game.height(30)
 		
-		encargadoDeSonidos.modoTest(true)
+		sonidosManager.modoTest(true)
 	
 	}
 	
   	test "nave enemiga se mueve cumpliendo la animacion" {
-		const nave = new NaveBasica(position = game.at(5,5))
+		const nave = new NaveEnemiga(position = game.at(5,5), agresion = 1, alColisionarConJugador = {})
 		assert.equals(game.at(5,5), nave.position())
 		
 		nave.direccion(derecha)
@@ -46,7 +46,7 @@ describe "funcionalidadDelJuego"{
 
 	}
 	
-	test"barra no debe salir del mapa"{
+	test"barra no debe salir del pantalla"{
 		jugador.position(game.at(1,1))
 		jugador.mover(izquierda)
 		assert.equals(jugador.position(),game.at(0,1))
@@ -57,29 +57,30 @@ describe "funcionalidadDelJuego"{
 }
 
 
-describe "FlotaNivelUno" {
+describe "flotaEnemiga" {
 	
 	const animacionDePrueba = new AnimacionDePrueba()
 	const naveDePrueba = new NaveDePrueba(animacion = animacionDePrueba)
 	
 	method initialize(){
-		flotaNivelUno.agregar(naveDePrueba)
+		flotaEnemiga.agregar(naveDePrueba)
+		flotaEnemiga.ejecutarAlMorir({})
 	}
 	
 	test "No está muerta si tiene naves" {				
-		assert.notThat(flotaNivelUno.estaMuerta())		
+		assert.notThat(flotaEnemiga.estaMuerta())		
 		assert.that(animacionDePrueba.fueIniciada())
 	}
 	
 	test "Está muerta si no tiene naves" {				
-		flotaNivelUno.remover(naveDePrueba)
-		assert.that(flotaNivelUno.estaMuerta())
+		flotaEnemiga.remover(naveDePrueba)
+		assert.that(flotaEnemiga.estaMuerta())
 		//assert.that(naveDePrueba.fueDestruida())
 	}
 	
 	test "Mueve a las naves de la flota" {
 		assert.notThat(naveDePrueba.fueMovida())
-		flotaNivelUno.mover()
+		flotaEnemiga.mover()
 		assert.that(naveDePrueba.fueMovida())
 	}
 }

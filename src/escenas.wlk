@@ -1,57 +1,81 @@
 import wollok.game.*
-import mapa.*
+import pantallas.*
 import armas.*
 import enemigos.*
 import jugador.*
 import direcciones.*
+import sonidos.*
+import tablero.*
 
 class Escena {
-
-	method iniciar() {
-		game.ground("bg.png")
-		self.iniciarEscena()		
-	}
 
 	method iniciarEscena()
 
 }
-//object
-object nivelUno inherits Escena {
+
+class EscenaDeBatalla inherits Escena {
+	
+	const dificultad
+	
 	
 	override method iniciarEscena() {
-		mapa.generar()
+		jugador.recargarBalas()
+		const pantalla = new PantallaDeBatalla(dificultad = dificultad)
+		pantalla.generar()
 		selector.inicializar()		
-		game.onTick(100, "MovimientoEnemigo", { flotaNivelUno.mover()})
+		game.onTick(100, flotaEnemiga.identity().toString(), { flotaEnemiga.mover()})
+		flotaEnemiga.ejecutarAlMorir({
+			game.schedule(500, {				
+				game.removeTickEvent(flotaEnemiga.identity().toString())
+				balasManager.limpiarBalas()
+				sonidosManager.reproducir(victoria)
+				score.avanzarOleada()				
+				escenasManager.cambiarEscenaA(new EscenaDePresentacionDeOleada())
+			})
+		})		
 		game.onCollideDo(jugador, { enemigo => enemigo.colision(jugador)})
 		keyboard.left().onPressDo({ jugador.mover(izquierda)})
 		keyboard.right().onPressDo({ jugador.mover(derecha)})
 		keyboard.space().onPressDo({ jugador.disparar()})
+		keyboard.y().onPressDo({flotaEnemiga.enemigos().forEach{en=> flotaEnemiga.remover(en)}})
 	}
+	
 }
 
 object menuPrincipal inherits Escena {
 	override method iniciarEscena() {
-		mapaMenu.generar()		
+		pantallaMenu.generar()	
+		keyboard.enter().onPressDo({
+			m.finalizarMenu()
+			escenasManager.presentarOleada()
+		})	
 	}
 }
 
 object escenasManager {
 
-	const escenaInicial = nivelUno//menuPrincipal//nivelUno
+	const escenaInicial = menuPrincipal//	new EscenaDeBatalla(dificultad = score.oleadaActual())
 
 	method iniciarJuego(){
 		ventana.iniciar()
-		escenaInicial.iniciar()
+		escenaInicial.iniciarEscena()
 		game.start()
 	}
 	
 	method cambiarEscenaA(escena){
 		game.clear()
-		escena.iniciar()
+		escena.iniciarEscena()
+	}
+	
+	method presentarOleada(){
+		self.cambiarEscenaA(new EscenaDePresentacionDeOleada())
+	}
+	
+	method iniciarBatalla(){
+		self.cambiarEscenaA(new EscenaDeBatalla(dificultad = score.oleadaActual()))
 	}
 }
 class GameOver inherits Escena{
-	//const property puntuacion
 	override method iniciarEscena() {
 		gameOver.generar()		
 	}
@@ -60,9 +84,14 @@ class GameOver inherits Escena{
 
 class EscenaDePresentacionDeOleada inherits Escena {
 	override method iniciarEscena() {
-		const pantallaDeOleada = new PantallaDeOleada(oleada = 3)
+		const pantallaDeOleada = new PantallaDeOleada(actual = score.oleadaActual())
 		pantallaDeOleada.generar()
+		game.schedule(1000, {
+			escenasManager.iniciarBatalla()			
+		})
 	}
 }
+
+
 
 

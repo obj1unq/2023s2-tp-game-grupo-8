@@ -1,5 +1,5 @@
 import tablero.score
-import enemigos.flotaNivelUno
+import enemigos.flotaEnemiga
 import wollok.game.*
 import sonidos.*
 
@@ -7,12 +7,12 @@ class PuedeSerDestruida{
 	method ejecutar(colisionable){
 		score.aumentarPuntos()
 		colisionable.animarDestruccion()		
-		flotaNivelUno.remover(colisionable)
+		flotaEnemiga.remover(colisionable)
 		game.schedule(100, { 
 			game.removeVisual(colisionable)
 			colisionable.animacion().detener()
 		})
-		encargadoDeSonidos.reproducir("esplosion.mp3")
+		sonidosManager.reproducir(esplosion)
 		colisionable.estadoDestruccion(new EnDestruccion())
 	}
 }

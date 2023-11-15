@@ -6,8 +6,10 @@ import direcciones.*
 import tablero.*
 import animacion.*
 import escenas.*
+import escenas.*
+import escenas.*
 
-class Mapa{
+class Pantalla{
 	
 	method celdas()
 	
@@ -39,13 +41,23 @@ object s { // Score
 }
 
 object n { // Naves enemigas
-	
+	var property agresionNaves = 0
 	method generar(position) {
-		const enemigo = new NaveBasica(position = position)
+		const enemigo = self.crearNave(position)
 		game.addVisual(enemigo)
-		flotaNivelUno.agregar(enemigo)
+		flotaEnemiga.agregar(enemigo)
 	}
-		
+	
+	method crearNave(position){
+		return new NaveEnemiga(position = position, 
+			agresion = agresionNaves, 
+			alColisionarConJugador = {self.finalizarPorDerrota()}
+		)
+	}	
+	
+	method finalizarPorDerrota(){
+		game.removeTickEvent(flotaEnemiga.identity().toString())
+	}
 }
 
 
@@ -69,7 +81,8 @@ object b { // Nave principal
 
 
 
-object mapa inherits Mapa {	
+class PantallaDeBatalla inherits Pantalla {	
+	const dificultad
 	override method celdas() = [
 		[_,_,_,_,_,s,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
@@ -88,7 +101,8 @@ object mapa inherits Mapa {
 	].reverse() //reverse porque el y crece en el orden inverso
 	
 	
-	override method generar() {		
+	override method generar() {	
+		n.agresionNaves(dificultad)	
 		super()		
 		game.addVisual(selector)  // se instancia el selector 
 		
@@ -109,7 +123,7 @@ object m { // menu
 	}
 }
 
-object mapaMenu inherits Mapa{
+object pantallaMenu inherits Pantalla{
 	override method celdas() = [
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
@@ -126,18 +140,9 @@ object mapaMenu inherits Mapa{
 		[_,_,_,_,_,_,_,_,_,_,_],		
 		[m,_,_,_,_,_,_,_,_,_,_]
 	].reverse()
-	
-	
-	override method generar() {
-		super()	
-		keyboard.enter().onPressDo({
-			m.finalizarMenu()
-			escenasManager.cambiarEscenaA(nivelUno)
-		})
-	}
-	
 }
-object gameOver inherits Mapa{
+
+object gameOver inherits Pantalla{
 	override method celdas() = [
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
@@ -158,17 +163,18 @@ object gameOver inherits Mapa{
 		super()	
 		keyboard.enter().onPressDo({//iniciar de nuevo y un esc para salir del juego
 			//m.finalizarMenu()
-			escenasManager.cambiarEscenaA(nivelUno)
+			score.resetear()
+			escenasManager.presentarOleada()
 		})
 		keyboard.alt().onPressDo({
-			//escenasManager.cambiarEscenaA(nivelUno)
+			//escenasManager.cambiarEscenaA(escenaDeBatalla)
 			game.stop()
 		})
 	}
 	
 }
-class PantallaDeOleada inherits Mapa{
-	const property oleada 
+class PantallaDeOleada inherits Pantalla{
+	const property actual 
 	override method celdas() = [
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
@@ -186,7 +192,7 @@ class PantallaDeOleada inherits Mapa{
 		[_,_,_,_,_,_,_,_,_,_,_]
 	].reverse()
 	override method generar() {
-		l.proxima(oleada)
+		l.proxima(actual)
 		super()	
 		
 	}
@@ -275,6 +281,6 @@ object ventana {
 		game.width(celdas.anyOne().size())
 		game.height(celdas.size())
 		game.cellSize(50)
+		game.ground("bg.png")
 	}
 }
-

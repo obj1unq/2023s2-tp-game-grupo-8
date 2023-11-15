@@ -4,17 +4,23 @@ import tablero.*
 import animacion.*
 import direcciones.*
 import sonidos.*
-import mapa.*
+import pantallas.*
 import animacion.*
 import estadosDestruccion.*
 
-object flotaNivelUno {
+object flotaEnemiga {
 
 	const property enemigos = []
+	var alMorir
+	
 
 	method agregar(enemigo) {
 		enemigos.add(enemigo)
 		enemigo.animacion().iniciar()
+	}
+	
+	method ejecutarAlMorir(bloque){
+		alMorir = bloque
 	}
 
 	method mover() {
@@ -23,19 +29,30 @@ object flotaNivelUno {
 
 	method remover(enemigo) {
 		enemigos.remove(enemigo)
+		self.chequearFlota()
+	}
+	
+	method chequearFlota(){
+		if(self.estaMuerta()){
+			alMorir.apply()
+		}
 	}
 
 	method estaMuerta() {
 		return enemigos.isEmpty()
 	}
+	
 }
 
-class NaveBasica {
+class NaveEnemiga {
 	const objetivo = jugador
+	const agresion
+	const alColisionarConJugador 
 	var property position
 	var property direccion = derecha	
 	var property animacion = new AnimacionEnemigo()
 	var property estadoDestruccion = new PuedeSerDestruida()
+	
 
 	method image() {
 		return animacion.image()
@@ -63,7 +80,7 @@ class NaveBasica {
 	}
 
 	method bajar(_position) {
-		return _position.down(1)
+		return _position.down(agresion)
 	}
 
 	method debeGirar() = self.position().x() >= game.width() - 10 || self.position().x() <= 10
@@ -72,6 +89,7 @@ class NaveBasica {
 		//Solo destruye al objetivo
 		if(algo == objetivo){
 			self.destruir()
+			alColisionarConJugador.apply()
 			objetivo.destruir()
 			objetivo.perder()
 		}
