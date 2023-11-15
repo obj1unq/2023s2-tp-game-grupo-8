@@ -4,11 +4,12 @@ import armas.*
 import enemigos.*
 import jugador.*
 import direcciones.*
+import sonidos.*
 
 class Escena {
 
 	method iniciar() {
-		game.ground("bg.png")
+		
 		self.iniciarEscena()		
 	}
 
@@ -37,12 +38,13 @@ object menuPrincipal inherits Escena {
 
 object escenasManager {
 
-	const escenaInicial = nivelUno//menuPrincipal//nivelUno
+	const escenaInicial = menuPrincipal//nivelUno
 
 	method iniciarJuego(){
 		ventana.iniciar()
 		escenaInicial.iniciar()
 		game.start()
+		
 	}
 	
 	method cambiarEscenaA(escena){

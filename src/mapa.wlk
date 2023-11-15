@@ -6,6 +6,7 @@ import direcciones.*
 import tablero.*
 import animacion.*
 import escenas.*
+import sonidos.*
 
 class Mapa{
 	
@@ -130,8 +131,11 @@ object mapaMenu inherits Mapa{
 	
 	override method generar() {
 		super()	
+		game.schedule(0, {encargadoDeSonidos.reproducirSonidoAmbiente("Undertale_Game_Over.mp3")})
+		
 		keyboard.enter().onPressDo({
 			m.finalizarMenu()
+			encargadoDeSonidos.detenerSonidoAmbiente()
 			escenasManager.cambiarEscenaA(nivelUno)
 		})
 	}
@@ -254,6 +258,7 @@ object p { // menu
 
 
 object ventana {
+	
 	const celdas = [
 		[_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_],
@@ -272,9 +277,11 @@ object ventana {
 	]
 	
 	method iniciar(){
+		
 		game.width(celdas.anyOne().size())
 		game.height(celdas.size())
 		game.cellSize(50)
+		game.ground("bg.png")
 	}
 }
 
