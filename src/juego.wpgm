@@ -1,6 +1,5 @@
 import escenas.escenasManager
 import tablero.*
-program juego {
-	score.puntos(4584)
+program juego {	
 	escenasManager.iniciarJuego()	
 }

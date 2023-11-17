@@ -34,4 +34,5 @@ object disparo inherits Mp3 {}
 
 object victoria inherits Ogg {}
 
+object tecla inherits Mp3{}
 object derrota inherits Ogg {}

@@ -86,7 +86,7 @@ class EscenaDePresentacionDeOleada inherits Escena {
 	override method iniciarEscena() {
 		const pantallaDeOleada = new PantallaDeOleada(actual = score.oleadaActual())
 		pantallaDeOleada.generar()
-		game.schedule(1000, {
+		game.schedule(2000, {
 			escenasManager.iniciarBatalla()			
 		})
 	}
