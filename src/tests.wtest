@@ -11,9 +11,19 @@ import estadosDestruccion.*
 
 class NaveDePrueba {
 	var property fueMovida = false
+	var property fueDestruida = false
+	var property estado
 	const property animacion
 	method mover(){
 		fueMovida = true
+	}
+	
+	method animarDestruccion(){
+		fueDestruida = true
+	}
+	
+	method estadoDestruccion(_estado){
+		estado = _estado
 	}
 }
 
@@ -66,7 +76,7 @@ describe "funcionalidadDelJuego"{
 describe "flotaEnemiga" {
 	
 	const animacionDePrueba = new AnimacionDePrueba()
-	const naveDePrueba = new NaveDePrueba(animacion = animacionDePrueba)
+	const naveDePrueba = new NaveDePrueba(animacion = animacionDePrueba, estado = null)
 	
 	method initialize(){
 		flotaEnemiga.agregar(naveDePrueba)
@@ -97,12 +107,14 @@ describe "Estado PuedeSerDestruida" {
 	test "Envia mensajes al ser ejecutado"{
 		sonidosManager.modoTest(true)
 		const animacionDePrueba = new AnimacionDePrueba()
-		const naveDePrueba = new NaveDePrueba(animacion = animacionDePrueba)
+		const naveDePrueba = new NaveDePrueba(animacion = animacionDePrueba, estado = null)
 		flotaEnemiga.agregar(naveDePrueba)
+		flotaEnemiga.ejecutarAlMorir({})
 		const estado = new PuedeSerDestruida()
-		estado.ejecutar()
+		estado.ejecutar(naveDePrueba)
 		assert.equals(100, score.puntos())
-		assert.that(animacionDePrueba.fueDetenida())
+		assert.that(naveDePrueba.fueDestruida())
 		assert.that(flotaEnemiga.estaMuerta())
+		assert.that(naveDePrueba.estado() != null)
 	}
 }
