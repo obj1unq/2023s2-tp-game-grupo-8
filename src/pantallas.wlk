@@ -161,7 +161,7 @@ class PantallaDeOleada inherits Pantalla {
 
 	override method generar() {
 		l.proxima(actual)
-		new MaquinaDeEscribir(altura= 6)
+		new MaquinaDeEscribir(altura= 11)
 			.primero("OLEADA "+ actual.toString())
 			.empezar()
 	}
