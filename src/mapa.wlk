@@ -194,6 +194,7 @@ class PantallaDeOleada inherits Mapa{
 		super()	
 		
 	}
+	
 }
 object o {
 	method generar(position) {

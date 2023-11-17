@@ -36,6 +36,7 @@ object menuPrincipal inherits Escena {
 	}
 }
 
+
 object escenasManager {
 
 	const escenaInicial = menuPrincipal//nivelUno

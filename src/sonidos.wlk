@@ -17,6 +17,7 @@ object encargadoDeSonidos {
 			sonidoAmbiente = game.sound(nombreDelSonido)
 			sonidoAmbiente.play()
 		}
+	
 		
 }
 	
