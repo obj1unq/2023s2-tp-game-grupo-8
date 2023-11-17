@@ -43,7 +43,7 @@ class EscenaDeBatalla inherits Escena {
 }
 
 object menuPrincipal inherits Escena {
-	override method iniciarEscena() {
+	override method iniciarEscena() {		
 		pantallaMenu.generar()	
 		keyboard.enter().onPressDo({
 			m.finalizarMenu()
@@ -54,7 +54,7 @@ object menuPrincipal inherits Escena {
 
 object escenasManager {
 
-	const escenaInicial = menuPrincipal//	new EscenaDeBatalla(dificultad = score.oleadaActual())
+	const escenaInicial = new GameOver()//menuPrincipal//	new EscenaDeBatalla(dificultad = score.oleadaActual())
 
 	method iniciarJuego(){
 		ventana.iniciar()
@@ -86,7 +86,7 @@ class EscenaDePresentacionDeOleada inherits Escena {
 	override method iniciarEscena() {
 		const pantallaDeOleada = new PantallaDeOleada(actual = score.oleadaActual())
 		pantallaDeOleada.generar()
-		game.schedule(1000, {
+		game.schedule(2000, {
 			escenasManager.iniciarBatalla()			
 		})
 	}
