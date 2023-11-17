@@ -6,6 +6,7 @@ import tablero.*
 import pantallas.*
 import wollok.game.*
 import direcciones.*
+import estadosDestruccion.*
 
 
 class NaveDePrueba {
@@ -18,9 +19,14 @@ class NaveDePrueba {
 
 class AnimacionDePrueba{
 	var property fueIniciada = false
+	var property fueDetenida = false
 	
 	method iniciar(){
 		fueIniciada = true
+	}
+
+	method detener(){
+		fueDetenida = true
 	}
 }
 
@@ -82,5 +88,21 @@ describe "flotaEnemiga" {
 		assert.notThat(naveDePrueba.fueMovida())
 		flotaEnemiga.mover()
 		assert.that(naveDePrueba.fueMovida())
+	}
+}
+
+
+describe "Estado PuedeSerDestruida" {
+
+	test "Envia mensajes al ser ejecutado"{
+		sonidosManager.modoTest(true)
+		const animacionDePrueba = new AnimacionDePrueba()
+		const naveDePrueba = new NaveDePrueba(animacion = animacionDePrueba)
+		flotaEnemiga.agregar(naveDePrueba)
+		const estado = new PuedeSerDestruida()
+		estado.ejecutar()
+		assert.equals(100, score.puntos())
+		assert.that(animacionDePrueba.fueDetenida())
+		assert.that(flotaEnemiga.estaMuerta())
 	}
 }
