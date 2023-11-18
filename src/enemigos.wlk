@@ -20,6 +20,7 @@ object flotaEnemiga {
 	}
 	
 	method ejecutarAlMorir(bloque){
+		
 		alMorir = bloque
 	}
 

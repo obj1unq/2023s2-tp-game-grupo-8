@@ -1,13 +1,26 @@
 import wollok.game.*
 
 object sonidosManager {
-	
+	var sonidoAmbiente
 	var property modoTest = false
 	method reproducir(sonido){
 		if (not self.modoTest()){
 			game.sound(sonido.nombre()).play()
 		}
 		
+	}
+	method reproducirSonidoAmbiente(nombreDelSonido){
+		if (not self.modoTest()){	
+			sonidoAmbiente = game.sound(nombreDelSonido)
+			sonidoAmbiente.volume(0.5)
+			sonidoAmbiente.play()
+		}
+	
+	}
+	method detenerSonidoAmbiente(){
+		if (not self.modoTest()){
+			sonidoAmbiente.stop()
+		}
 	}
 }
 

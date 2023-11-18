@@ -19,20 +19,23 @@ class EscenaDeBatalla inherits Escena {
 	
 	
 	override method iniciarEscena() {
+		sonidosManager.reproducirSonidoAmbiente("game_load.mp3")
 		jugador.recargarBalas()
 		const pantalla = new PantallaDeBatalla(dificultad = dificultad)
 		pantalla.generar()
 		selector.inicializar()		
 		game.onTick(100, flotaEnemiga.identity().toString(), { flotaEnemiga.mover()})
 		flotaEnemiga.ejecutarAlMorir({
-			game.schedule(500, {				
+			game.schedule(500, {	
+				sonidosManager.detenerSonidoAmbiente()			
 				game.removeTickEvent(flotaEnemiga.identity().toString())
 				balasManager.limpiarBalas()
 				sonidosManager.reproducir(victoria)
 				score.avanzarOleada()				
 				escenasManager.cambiarEscenaA(new EscenaDePresentacionDeOleada())
 			})
-		})		
+		})
+			
 		game.onCollideDo(jugador, { enemigo => enemigo.colision(jugador)})
 		keyboard.left().onPressDo({ jugador.mover(izquierda)})
 		keyboard.right().onPressDo({ jugador.mover(derecha)})
@@ -45,8 +48,10 @@ class EscenaDeBatalla inherits Escena {
 object menuPrincipal inherits Escena {
 	override method iniciarEscena() {		
 		pantallaMenu.generar()	
+		game.schedule(0, {sonidosManager.reproducirSonidoAmbiente("game_enter.mp3")})
 		keyboard.enter().onPressDo({
 			m.finalizarMenu()
+			sonidosManager.detenerSonidoAmbiente()
 			escenasManager.presentarOleada()
 		})	
 	}
