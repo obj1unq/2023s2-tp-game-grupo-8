@@ -105,6 +105,7 @@ class PantallaDeBatalla inherits Pantalla {
 		n.agresionNaves(dificultad)
 		super()
 		game.addVisual(selector) // se instancia el selector 
+		
 	}
 
 }
@@ -154,12 +155,16 @@ object gameOver inherits Pantalla {
 
 	override method generar() {
 		// super()	
+		e.generar(game.at(3,1))
+		p.generar(game.at(3,2))
 		new MaquinaDeEscribir(altura = 12)
 			.primero("GAME OVER")
 			.insertarLinea()
 			.despues("SCORE")
 			.despues(score.puntos().toString())
 			.empezar()
+			
+			
 		keyboard.enter().onPressDo({ // iniciar de nuevo y un esc para salir del juego
 		// m.finalizarMenu()
 			score.resetear()
@@ -237,14 +242,6 @@ class VisualNroDeOleada {
 
 }
 
-object g {
-
-	method generar(position) {
-		game.addVisual(gameOverImg)
-		gameOverImg.position(position)
-	}
-
-}
 
 object e { // esc
 
@@ -255,16 +252,10 @@ object e { // esc
 
 }
 
-object gameOverImg {
-
-	var property image = "game_Over_logo.png"
-	var property position
-
-}
 
 object pressExit { //cambiarle imagen a alt para salir
 
-	var property image = "press-start.png"
+	var property image = "press-alt.png"
 	var property position
 
 }
@@ -399,5 +390,6 @@ class MaquinaDeEscribir{
 	method bajarLinea(){
 		altura = altura -1
 	}
+	
 }
 
