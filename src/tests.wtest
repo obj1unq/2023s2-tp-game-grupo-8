@@ -7,8 +7,9 @@ import pantallas.*
 import wollok.game.*
 import direcciones.*
 import estadosDestruccion.*
+import animacion.*
 
-
+//bala debe ser destruida
 class NaveDePrueba {
 	var property fueMovida = false
 	var property fueDestruida = false
@@ -117,4 +118,53 @@ describe "Estado PuedeSerDestruida" {
 		assert.that(flotaEnemiga.estaMuerta())
 		assert.that(naveDePrueba.estado() != null)
 	}
+}
+
+describe "Animaciones" {
+	method initialize(){
+		game.cellSize(20)
+		game.width(40)
+		game.height(30)
+		
+		sonidosManager.modoTest(true)
+
+}
+	
+	
+	test "Enemigo"{
+		const naveAhora = new NaveEnemiga(position = game.at(2,5),agresion = null, alColisionarConJugador = null)
+				
+		assert.equals(naveAhora.image(), "enemigo-1.png")
+		naveAhora.animacion().animar()
+		assert.equals(naveAhora.image(), "enemigo-2.png")
+		naveAhora.animacion().animar()
+		assert.equals(naveAhora.image(), "enemigo-3.png")
+		naveAhora.animacion().animar()
+		assert.equals(naveAhora.image(), "enemigo-4.png")
+		naveAhora.animacion().animar()
+		assert.equals(naveAhora.image(), "enemigo-5.png")
+		naveAhora.animacion().animar()
+		assert.equals(naveAhora.image(), "enemigo-6.png")
+	}
+	test "MenuPrincipal"{
+		const background = new AnimacionMenuPrincipal()
+		game.addVisual(background)
+		assert.equals(background.image(), "menu-1.png")
+		background.animar()
+		assert.equals(background.image(), "menu-2.png")
+		background.animar()
+		assert.equals(background.image(), "menu-3.png")
+		background.animar()
+		assert.equals(background.image(), "menu-4.png")
+		background.animar()
+		assert.equals(background.image(), "menu-5.png")
+		background.animar()
+		assert.equals(background.image(), "menu-6.png")
+		background.animar()
+		assert.equals(background.image(), "menu-7.png")
+		background.animar()
+		assert.equals(background.image(), "menu-8.png")
+		
+	}
+	
 }
