@@ -28,7 +28,6 @@ class EscenaDeBatalla inherits Escena {
 		flotaEnemiga.ejecutarAlMorir({
 			game.schedule(500, {	
 				sonidosManager.detenerSonidoAmbiente()			
-				game.removeTickEvent(flotaEnemiga.identity().toString())
 				balasManager.limpiarBalas()
 				sonidosManager.reproducir(victoria)
 				score.avanzarOleada()				
