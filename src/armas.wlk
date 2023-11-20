@@ -174,8 +174,12 @@ object balasManager {
 
 	method eliminarBala(bala) {
 		balas.remove(bala)
-		game.removeVisual(bala)
-		game.removeTickEvent(bala.identity().toString())
+		if(game.allVisuals().contains(bala)){
+			//A veces intenta eliminar bala que ya había sido eliminada
+			//Esto evita que lance excepción y mejora performance
+			game.removeVisual(bala)			
+			game.removeTickEvent(bala.identity().toString())
+		}
 	}
 
 	method notificarColision(bala, otro) {

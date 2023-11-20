@@ -284,6 +284,7 @@ object ventana {
 		game.width(celdas.anyOne().size())
 		game.height(celdas.size())
 		game.cellSize(50)
+		game.title("Qalaga")
 		game.ground("bg.png")
 	}
 
