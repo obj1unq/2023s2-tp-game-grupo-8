@@ -12,7 +12,7 @@ class PuedeSerDestruida{
 			game.removeVisual(colisionable)
 			colisionable.animacion().detener()
 		})
-		sonidosManager.reproducir(esplosion)
+		sonidosManager.reproducir(explosion)
 		colisionable.estadoDestruccion(new EnDestruccion())
 	}
 }

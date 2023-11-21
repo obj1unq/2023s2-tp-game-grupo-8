@@ -1,34 +1,41 @@
 import wollok.game.*
-object derecha {
 
-	method siguiente(position) {
+class Direccion {
+	method siguiente(position)
+	method opuesto()
+}
+
+
+object derecha inherits Direccion {
+
+	override method siguiente(position) {
 		return position.right(1)
 	}
 	
-	method opuesto() = izquierda
+	override method opuesto() = izquierda
 }
 
-object izquierda {
+object izquierda inherits Direccion {
 
-	method siguiente(position) {
+	override method siguiente(position) {
 		return position.left(1)
 	}
-	method opuesto() = derecha
+	override method opuesto() = derecha
 
 }
 
-object arriba {
+object arriba inherits Direccion{
 
-	method siguiente(position) {
+	override method siguiente(position) {
 		return position.up(1)
 	}
-
+	override method opuesto() = abajo
 }
 
-object abajo {
+object abajo inherits Direccion{
 
-	method siguiente(position) {
+	override method siguiente(position) {
 		return position.down(1)
 	}
-
+	override method opuesto()= arriba
 }
