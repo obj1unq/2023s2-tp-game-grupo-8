@@ -168,3 +168,44 @@ describe "Animaciones" {
 	}
 	
 }
+describe "colisiones"{
+	method initialize(){
+		game.cellSize(20)
+		game.width(40)
+		game.height(30)
+		
+		sonidosManager.modoTest(true)
+		
+	}
+	test "bala colisiona con nave"{
+		const bala = new TiroSimple(position=game.at(3,2))
+		const naveAhora = new NaveEnemiga(position = game.at(3,3),agresion = null, alColisionarConJugador = {})
+		
+//		game.addVisual(bala)
+//		game.addVisual(naveAhora)
+		
+		bala.mover()
+		assert.equals(naveAhora.image(), "esplosion.png")
+		
+	}
+	test "Jugador colisiona con NaveEnemiga"{
+		const naveAhora = new NaveEnemiga(position = game.at(3,3),agresion = null, alColisionarConJugador = {})
+		
+		
+		jugador.position(game.at(3,2))
+		game.addVisual(jugador)
+		game.addVisual(naveAhora)
+		assert.that(jugador.position()== game.at(3,2))
+		assert.that(naveAhora.position()== game.at(3,3))
+		
+		assert.equals(game.allVisuals(), "esplosion.png")
+		
+		
+		
+	}
+}
+
+
+
+
+

@@ -58,7 +58,7 @@ object menuPrincipal inherits Escena {
 
 object escenasManager {
 
-	const escenaInicial = new GameOver()//menuPrincipal//	new EscenaDeBatalla(dificultad = score.oleadaActual())
+	const escenaInicial =menuPrincipal// new GameOver()//menuPrincipal//	new EscenaDeBatalla(dificultad = score.oleadaActual())
 
 	method iniciarJuego(){
 		ventana.iniciar()
