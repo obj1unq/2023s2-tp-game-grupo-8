@@ -41,11 +41,12 @@ class Ogg inherits Sonido{
 	override method extension() = ".ogg"
 }
 
-object esplosion inherits Mp3{}
+object explosion inherits Mp3{}
 
 object disparo inherits Mp3 {}
 
 object victoria inherits Ogg {}
 
 object tecla inherits Mp3{}
+
 object derrota inherits Ogg {}

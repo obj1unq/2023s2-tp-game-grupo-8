@@ -38,7 +38,7 @@ class AnimacionEnemigo inherits Animacion{
 
 class Destruccion inherits Animacion{
 	override method image(){
-		return "esplosion.png"
+		return "explosion.png"
 	}
 	
 	override method iniciar(){

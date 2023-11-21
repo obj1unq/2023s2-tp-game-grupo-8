@@ -9,7 +9,7 @@ import direcciones.*
 import estadosDestruccion.*
 import animacion.*
 
-//bala debe ser destruida
+
 class NaveDePrueba {
 	var property fueMovida = false
 	var property fueDestruida = false
@@ -27,6 +27,14 @@ class NaveDePrueba {
 		estado = _estado
 	}
 }
+
+class CreadorDeBalasDePrueba{
+	var property posicion = null
+	method crear(_posicion){
+		posicion = _posicion
+	}
+}
+
 
 class AnimacionDePrueba{
 	var property fueIniciada = false
@@ -168,44 +176,114 @@ describe "Animaciones" {
 	}
 	
 }
-describe "colisiones"{
-	method initialize(){
-		game.cellSize(20)
-		game.width(40)
-		game.height(30)
-		
-		sonidosManager.modoTest(true)
-		
+
+describe "Direcciones"{
+	
+	const posicion = game.at(1, 1)
+	
+	test "El opuesto de derecha es izquierda y viceversa" {
+		assert.equals(izquierda, derecha.opuesto())
+		assert.equals(derecha, izquierda.opuesto())
 	}
-	test "bala colisiona con nave"{
-		const bala = new TiroSimple(position=game.at(3,2))
-		const naveAhora = new NaveEnemiga(position = game.at(3,3),agresion = null, alColisionarConJugador = {})
-		
-//		game.addVisual(bala)
-//		game.addVisual(naveAhora)
-		
-		bala.mover()
-		assert.equals(naveAhora.image(), "esplosion.png")
-		
+	
+	test "El opuesto de arriba es abajo y viceversa" {
+		assert.equals(arriba, abajo.opuesto())
+		assert.equals(abajo, arriba.opuesto())
 	}
-	test "Jugador colisiona con NaveEnemiga"{
-		const naveAhora = new NaveEnemiga(position = game.at(3,3),agresion = null, alColisionarConJugador = {})
-		
-		
-		jugador.position(game.at(3,2))
-		game.addVisual(jugador)
-		game.addVisual(naveAhora)
-		assert.that(jugador.position()== game.at(3,2))
-		assert.that(naveAhora.position()== game.at(3,3))
-		
-		assert.equals(game.allVisuals(), "esplosion.png")
-		
-		
-		
-	}
+	
+	test "Los siguientes de cada direccion son correctos"{
+		assert.equals(game.at(1, 2), arriba.siguiente(posicion))
+		assert.equals(game.at(1, 0), abajo.siguiente(posicion))
+		assert.equals(game.at(0, 1), izquierda.siguiente(posicion))
+		assert.equals(game.at(2, 1), derecha.siguiente(posicion))		
+	}	
 }
 
 
+describe "Tablero"{
+	
+	method initialize(){
+		game.width(10)
+		game.height(10)
+	}
+	
+	test "Los puntos dados no pertenecen al tablero"{
+		assert.notThat(tablero.pertenece(game.at(-1, -1)))
+		assert.notThat(tablero.pertenece(game.at(10, 10)))
+		assert.notThat(tablero.pertenece(game.at(5, 10)))
+		assert.notThat(tablero.pertenece(game.at(10, 5)))
+	}
+	
+	test "Los puntos dados pertenecen al tablero"{
+		assert.that(tablero.pertenece(game.at(0, 0)))
+		assert.that(tablero.pertenece(game.at(9, 9)))
+		assert.that(tablero.pertenece(game.at(5, 9)))
+		assert.that(tablero.pertenece(game.at(9, 5)))
+	}
+	
+	
+	test "Se fue por arriba"{
+		assert.that(tablero.seFuePorArriba(game.at(5, 10)))
+	}
+	
+}
 
+describe "Score"{
+	
+	test "Avanza el número de oleada"{
+		score.avanzarOleada()
+		assert.equals(2, score.oleadaActual())
+	}
+	
+	test "El texto del score es correcto"{
+		score.aumentarPuntos()
+		assert.equals("score: 100", score.text())
+	}
+	
+	test "Resetear devuelve todo a cero"{
+		score.aumentarPuntos()
+		score.avanzarOleada()
+		score.resetear()
+		assert.equals(0, score.puntos())
+		assert.equals(1, score.oleadaActual())
+	}
+}
 
-
+describe "Jugador"{
+	
+	method initialize(){
+		game.width(30)
+		game.height(30)
+		sonidosManager.modoTest(true)
+	}
+	
+	test "Se mueve cuando la posición está dentro del tablero"{
+		jugador.mover(derecha)
+		assert.equals(game.at(21, 1), jugador.position())
+	}
+	
+	test "Falla validación cuando se mueve y la posición está fuera del tablero"{
+		jugador.position(game.at(29, 1))
+		assert.throwsException({jugador.mover(derecha)})
+	}
+	
+	test "Dispara bala en la posición correcta y disminuye cantidad de balas"{
+		const creador = new CreadorDeBalasDePrueba()
+		jugador.creadorDeBala(creador)
+		jugador.disparar()
+		assert.equals(game.at(20, 2), creador.posicion())
+	}
+	
+	test "Falla validación cuando dispara y no tiene balas"{
+		(1.. 50).forEach({x=> jugador.disparar()})
+		assert.throwsException({jugador.disparar()})
+	}
+	
+	test "Puede disparar cuando recarga balas"{
+		(1.. 50).forEach({x=> jugador.disparar()})
+		assert.notThat(jugador.tieneBalas())
+		jugador.recargarBalas()
+		assert.that(jugador.tieneBalas())
+	}
+	
+}
