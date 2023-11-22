@@ -77,7 +77,7 @@ class NaveEnemiga {
 	}
 	
 	method debajoDeObjetivo()  {
-		return self.position().y() < objetivo.position().y()
+		return self.position().y() < objetivo.position().y() and self.position().x() == objetivo.position().x()
 	}
 
 	method debeGirar(_position) {
