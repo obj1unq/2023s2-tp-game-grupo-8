@@ -89,7 +89,6 @@ class NaveEnemiga {
 	method colision(algo) { 
 		//Solo destruye al objetivo
 		if(algo == objetivo){
-			self.destruir()
 			sonidosManager.detenerSonidoAmbiente()		
 			alColisionarConJugador.apply()
 			objetivo.destruir()
