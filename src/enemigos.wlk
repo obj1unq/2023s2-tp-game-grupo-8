@@ -70,6 +70,14 @@ class NaveEnemiga {
 			proxima = self.bajarYGirar(proxima)
 		}
 		self.position(proxima)
+		
+		if(self.debajoDeObjetivo()) {
+			self.destruirObjetivo()
+		}
+	}
+	
+	method debajoDeObjetivo()  {
+		return self.position().y() < objetivo.position().y()
 	}
 
 	method debeGirar(_position) {
@@ -94,10 +102,7 @@ class NaveEnemiga {
 	method colision(algo) { 
 		//Solo destruye al objetivo
 		if(algo == objetivo){
-			sonidosManager.detenerSonidoAmbiente()		
-			alColisionarConJugador.apply()
-			objetivo.destruir()
-			objetivo.perder()
+			self.destruirObjetivo()
 		}
 	}
 
@@ -109,5 +114,12 @@ class NaveEnemiga {
 		animacion.detener()
 		animacion = new Destruccion()
 		animacion.iniciar()
+	}
+	
+	method destruirObjetivo() {
+		sonidosManager.detenerSonidoAmbiente()	
+		alColisionarConJugador.apply()
+		objetivo.destruir()
+		objetivo.perder()
 	}
 }
