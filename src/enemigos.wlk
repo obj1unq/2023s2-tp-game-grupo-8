@@ -35,10 +35,15 @@ object flotaEnemiga {
 	
 	method chequearFlota(){
 		if(self.estaMuerta()){
+			self.limpiarFlota()
 			alMorir.apply()
 		}
 	}
-
+	
+	method limpiarFlota(){
+		enemigos.clear()
+	}
+	
 	method estaMuerta() {
 		return enemigos.isEmpty()
 	}

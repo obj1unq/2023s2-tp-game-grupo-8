@@ -4,10 +4,12 @@ import direcciones.*
 import sonidos.*
 import armas.*
 import escenas.*
+import pantallas.*
+import ticks.*
 
 
 object jugador {
-	var property position = game.at(20, 1)
+	var property position = en.posicion(0, 0)
 	const balasIniciales = 50
 	var cantBalas = balasIniciales
 	var property creadorDeBala = creadorDeBalas
@@ -29,7 +31,7 @@ object jugador {
 	
 	method disparar() {
 		self.validarDisparar()
-		creadorDeBala.crear(game.at(self.position().x(), self.position().y() +1))
+		creadorDeBala.crear(en.posicion(self.position().x(), self.position().y() +1))
 		cantBalas -= 1
 	}
 	
@@ -56,10 +58,12 @@ object jugador {
 	method colision(otro) {	}
 	
 	method perder() {		
-		game.schedule(500, {
-			sonidosManager.reproducir(derrota)
-			escenasManager.cambiarEscenaA(new GameOver())			
-		})
+		score.resetear()
+		escenasManager.presentarOleada()
+//		sonidosManager.reproducir(derrota)
+//		game.schedule(500, {
+//			escenasManager.cambiarEscenaA(new GameOver())			
+//		})
 	}	
 	
 	method recargarBalas(){

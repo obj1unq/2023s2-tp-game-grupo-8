@@ -259,7 +259,7 @@ describe "Jugador"{
 	
 	test "Se mueve cuando la posición está dentro del tablero"{
 		jugador.mover(derecha)
-		assert.equals(game.at(21, 1), jugador.position())
+		assert.equals(game.at(1, 0), jugador.position())
 	}
 	
 	test "Falla validación cuando se mueve y la posición está fuera del tablero"{
@@ -271,7 +271,7 @@ describe "Jugador"{
 		const creador = new CreadorDeBalasDePrueba()
 		jugador.creadorDeBala(creador)
 		jugador.disparar()
-		assert.equals(game.at(20, 2), creador.posicion())
+		assert.equals(game.at(0, 1), creador.posicion())
 	}
 	
 	test "Falla validación cuando dispara y no tiene balas"{

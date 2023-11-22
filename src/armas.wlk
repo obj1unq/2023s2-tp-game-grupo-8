@@ -5,6 +5,7 @@ import direcciones.*
 import tablero.*
 import jugador.*
 import sonidos.*
+import ticks.*
 
 class RecuadroArma {
 
@@ -18,7 +19,7 @@ class RecuadroArma {
 
 object selector {
 
-	var property position = game.at(0, 0)
+	var property position = en.posicion(0, 0)
 	const property image = "selector.png"
 	const property recuadrosPosition = []
 
@@ -149,7 +150,7 @@ class TiroTriple inherits Bala {
 	const movimiento
 
 	override method mover() {
-		const proxima = game.at(self.position().x() + movimiento.x(), self.position().y() + movimiento.y())
+		const proxima = en.posicion(self.position().x() + movimiento.x(), self.position().y() + movimiento.y())
 		self.position(proxima)
 	}
 
@@ -163,7 +164,7 @@ object balasManager {
 		if (not balas.contains(tiro)) {
 			sonidosManager.reproducir(disparo)
 			game.addVisual(tiro)
-			game.onTick(tiro.velocidad(), tiro.identity().toString(), { tiro.actualizar()})
+			tickManager.agregarTick(tiro.velocidad(), tiro, { tiro.actualizar()})
 			game.onCollideDo(tiro, { other => tiro.colision(other)})
 		}
 	}
@@ -178,7 +179,7 @@ object balasManager {
 			//A veces intenta eliminar bala que ya había sido eliminada
 			//Esto evita que lance excepción y mejora performance
 			game.removeVisual(bala)			
-			game.removeTickEvent(bala.identity().toString())
+			tickManager.eliminarTick(bala)
 		}
 	}
 

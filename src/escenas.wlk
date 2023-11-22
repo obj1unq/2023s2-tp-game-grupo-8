@@ -5,6 +5,7 @@ import enemigos.*
 import jugador.*
 import direcciones.*
 import sonidos.*
+import ticks.*
 import tablero.*
 
 class Escena {
@@ -24,7 +25,7 @@ class EscenaDeBatalla inherits Escena {
 		const pantalla = new PantallaDeBatalla(dificultad = dificultad)
 		pantalla.generar()
 		selector.inicializar()		
-		game.onTick(100, flotaEnemiga.identity().toString(), { flotaEnemiga.mover()})
+		tickManager.agregarTick(100, flotaEnemiga, { flotaEnemiga.mover()})
 		flotaEnemiga.ejecutarAlMorir({
 			game.schedule(500, {	
 				sonidosManager.detenerSonidoAmbiente()			
@@ -67,7 +68,9 @@ object escenasManager {
 	}
 	
 	method cambiarEscenaA(escena){
+		tickManager.limpiarTicks()
 		game.clear()
+		console.println(game.allVisuals().size())
 		escena.iniciarEscena()
 	}
 	

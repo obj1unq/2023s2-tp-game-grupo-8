@@ -8,6 +8,7 @@ import animacion.*
 import escenas.*
 import sonidos.*
 import escenas.*
+import ticks.*
 
 class Pantalla {
 
@@ -19,7 +20,7 @@ class Pantalla {
 
 	method generarCelda(x, y) {
 		const celda = self.celdas().get(y).get(x)
-		celda.generar(game.at(x, y))
+		celda.generar(en.posicion(x, y))
 	}
 
 }
@@ -56,7 +57,8 @@ object n { // Naves enemigas
 	}
 
 	method finalizarPorDerrota() {
-		game.removeTickEvent(flotaEnemiga.identity().toString())
+		tickManager.eliminarTick(flotaEnemiga)
+		flotaEnemiga.limpiarFlota()
 	}
 
 }
@@ -128,8 +130,22 @@ object m { // menu
 
 object pantallaMenu inherits Pantalla {
 
-	override method celdas() = [ [_,_,_,_,_,_,_,_,_,_,_], 
-	[_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [_,_,_,p,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_,_], [m,_,_,_,_,_,_,_,_,_,_] ].reverse()
+	override method celdas() = [ 
+		[_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[_,_,_,p,_,_,_,_,_,_,_], 
+		[_,_,_,_,_,_,_,_,_,_,_], 
+		[m,_,_,_,_,_,_,_,_,_,_] 
+		].reverse()
 
 }
 
@@ -155,8 +171,8 @@ object gameOver inherits Pantalla {
 
 	override method generar() {
 		// super()	
-		e.generar(game.at(3,1))
-		p.generar(game.at(3,2))
+		e.generar(en.posicion(3,1))
+		p.generar(en.posicion(3,2))
 		new MaquinaDeEscribir(altura = 12)
 			.primero("GAME OVER")
 			.insertarLinea()
@@ -321,17 +337,17 @@ class Escritor inherits Linea{
 	const altura
 
 	override method escribir() {
-		game.onTick(100, self.identity().toString(), { self.escribirLetra()})
+		tickManager.agregarTick(100, self, { self.escribirLetra()})
 	}
 
 	method escribirLetra() {
 		if (mensaje.charAt(self.indiceActual()) != " ") {
-			game.addVisual(new Letra(letra = mensaje.charAt(self.indiceActual()), position = game.at(posicionActual, altura)))
+			game.addVisual(new Letra(letra = mensaje.charAt(self.indiceActual()), position = en.posicion(posicionActual, altura)))
 			sonidosManager.reproducir(tecla)
 		}
 		posicionActual = posicionActual + 1
 		if(self.yaEscribioTodo()){			
-			game.removeTickEvent(self.identity().toString())
+			tickManager.eliminarTick(self)
 			siguiente.escribir()
 		}
 		
@@ -413,8 +429,8 @@ class MaquinaDeEscribir{
 
 object en {
 	
-	const posiciones = (0..ventana.ancho()).map({x=> (0..ventana.alto()).map({y=> game.at(x, y)})})
+	const posiciones = (-5..ventana.ancho()+5).map({x=> (-5..ventana.alto()+5).map({y=> game.at(x, y)})})
 	
-	method posicion(x, y) = posiciones.get(x).get(y)
+	method posicion(x, y) = posiciones.get(x+5).get(y+5)
 }
 

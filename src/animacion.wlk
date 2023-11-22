@@ -1,4 +1,6 @@
 import wollok.game.*
+import pantallas.*
+import ticks.*
 
 class Animacion {
 	method image()
@@ -8,7 +10,7 @@ class Animacion {
 
 class AnimacionEnemigo inherits Animacion{
 	var frame = 1
-	var property position = game.at(1, 1)
+	var property position = en.posicion(1, 1)
 	var image = "enemigo-1.png"
 	
 	override method image(){
@@ -20,7 +22,7 @@ class AnimacionEnemigo inherits Animacion{
 	}
 	
 	override method iniciar(){
-		game.onTick(200, self.identity().toString(), {self.animar()})
+		tickManager.agregarTick(200, self, {self.animar()})
 	}
 	
 	method animar(){
@@ -32,7 +34,7 @@ class AnimacionEnemigo inherits Animacion{
 	}
 	
 	override method detener(){
-		game.removeTickEvent(self.identity().toString())		
+		tickManager.eliminarTick(self)	
 	}
 }
 
@@ -52,7 +54,7 @@ class Destruccion inherits Animacion{
 
 class AnimacionMenuPrincipal inherits Animacion {
 	var frame = 1	
-	var property position = game.at(0, 0)
+	var property position = en.posicion(0, 0)
 	
 	var image = "menu-1.png"
 	
@@ -65,7 +67,7 @@ class AnimacionMenuPrincipal inherits Animacion {
 	}
 	
 	override method iniciar(){
-		game.onTick(100, self.identity().toString(), {self.animar()})
+		tickManager.agregarTick(100, self, {self.animar()})
 	}
 	
 	method animar(){
@@ -77,6 +79,6 @@ class AnimacionMenuPrincipal inherits Animacion {
 	}
 	
 	override method detener(){
-		game.removeTickEvent(self.identity().toString())		
+		tickManager.eliminarTick(self)	
 	}
 }
