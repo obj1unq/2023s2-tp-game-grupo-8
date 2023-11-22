@@ -57,6 +57,7 @@ object n { // Naves enemigas
 
 	method finalizarPorDerrota() {
 		game.removeTickEvent(flotaEnemiga.identity().toString())
+		flotaEnemiga.limpiarFlota()
 	}
 
 }
