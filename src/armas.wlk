@@ -111,13 +111,15 @@ class Bala {
 	method velocidad() = 10 // Mientras mas bajo el numero, mas rapida la bala
 
 	method actualizar() {
-		self.mover()
-		if (!tablero.pertenece(self.position())) {
+		const proxima = self.proxima()
+		if (!tablero.pertenece(proxima)) {
 			balasManager.eliminarBala(self)
-		}
+		} else {
+			self.position(proxima)			
+		}		
 	}
-
-	method mover()
+	
+	method proxima()
 
 	method colision(otro) {
 		balasManager.notificarColision(self, otro)
@@ -130,10 +132,7 @@ class Bala {
 
 class TiroSimple inherits Bala {
 
-	override method mover() {
-		const proxima = arriba.siguiente(self.position())
-		self.position(proxima)
-	}
+	override method proxima() = arriba.siguiente(self.position())
 
 }
 
@@ -148,10 +147,7 @@ class TiroTriple inherits Bala {
 
 	const movimiento
 
-	override method mover() {
-		const proxima = game.at(self.position().x() + movimiento.x(), self.position().y() + movimiento.y())
-		self.position(proxima)
-	}
+	override method proxima() = game.at(self.position().x() + movimiento.x(), self.position().y() + movimiento.y())
 
 }
 

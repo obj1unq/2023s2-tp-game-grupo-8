@@ -1,39 +1,44 @@
 import wollok.game.*
 
 class Animacion {
-	method image()
-	method iniciar()
-	method detener()
-}
-
-class AnimacionEnemigo inherits Animacion{
 	var frame = 1
-	var property position = game.at(1, 1)
-	var image = "enemigo-1.png"
 	
-	override method image(){
-		return image
-	}
+	var property image = self.actual()
 	
-	method image(_image){
-		image = _image
-	}
+	method frames()
+	method tick()
+	method imagen()
 	
-	override method iniciar(){
-		game.onTick(200, self.identity().toString(), {self.animar()})
+	method iniciar(){
+		game.onTick(self.tick(), self.identity().toString(), {self.animar()})
 	}
 	
 	method animar(){
 		frame ++
-		if(frame > 6){
+		if(frame > self.frames()){
 			frame = 1
 		}
-		self.image("enemigo-"+frame.toString()+".png")
-	}
+		self.image(self.actual())
+	}	
 	
-	override method detener(){
+	method actual() = self.imagen()+"-"+frame.toString()+".png"
+	
+	 method detener(){
 		game.removeTickEvent(self.identity().toString())		
 	}
+}
+
+class AnimacionEnemigo inherits Animacion{
+	
+	var property position = game.at(1, 1)
+	
+	override method image(){
+		return image
+	}
+	override method frames () = 6
+	override method imagen() = "enemigo"
+	
+	override method tick() = 200
 }
 
 class Destruccion inherits Animacion{
@@ -48,35 +53,22 @@ class Destruccion inherits Animacion{
 	override method detener(){
 		
 	}	
+	
+	override method imagen() = "explosion.png"
+	override method tick() = 0
+	override method frames() = 0
 }
 
 class AnimacionMenuPrincipal inherits Animacion {
-	var frame = 1	
+		
 	var property position = game.at(0, 0)
 	
-	var image = "menu-1.png"
 	
-	override method image(){
-		return image
-	}
+	override method imagen() = "menu"
 	
-	method image(_image){
-		image = _image
-	}
 	
-	override method iniciar(){
-		game.onTick(100, self.identity().toString(), {self.animar()})
-	}
+	override method tick()=100
 	
-	method animar(){
-		frame ++
-		if(frame > 8){
-			frame = 1
-		}
-		self.image("menu-"+frame.toString()+".png")
-	}
+	override method frames() = 8
 	
-	override method detener(){
-		game.removeTickEvent(self.identity().toString())		
-	}
 }

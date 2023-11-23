@@ -35,7 +35,7 @@ class EscenaDeBatalla inherits Escena {
 			})
 		})
 			
-		game.onCollideDo(jugador, { enemigo => enemigo.colision(jugador)})
+		game.onCollideDo(jugador, { visual => jugador.colision(visual)})
 		keyboard.left().onPressDo({ jugador.mover(izquierda)})
 		keyboard.right().onPressDo({ jugador.mover(derecha)})
 		keyboard.space().onPressDo({ jugador.disparar()})
@@ -58,7 +58,7 @@ object menuPrincipal inherits Escena {
 
 object escenasManager {
 
-	const escenaInicial =menuPrincipal// new GameOver()//menuPrincipal//	new EscenaDeBatalla(dificultad = score.oleadaActual())
+	const escenaInicial = menuPrincipal// new GameOver()//menuPrincipal//	new EscenaDeBatalla(dificultad = score.oleadaActual())
 
 	method iniciarJuego(){
 		ventana.iniciar()
@@ -79,6 +79,7 @@ object escenasManager {
 		self.cambiarEscenaA(new EscenaDeBatalla(dificultad = score.oleadaActual()))
 	}
 }
+
 class GameOver inherits Escena{
 	override method iniciarEscena() {
 		gameOver.generar()		

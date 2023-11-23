@@ -53,7 +53,9 @@ object jugador {
 		game.removeVisual(self) 
 	}
 	
-	method colision(otro) {	}
+	method colision(otro) {	
+		otro.colision(self)
+	}
 	
 	method perder() {		
 		game.schedule(500, {
@@ -68,4 +70,8 @@ object jugador {
 }
 
 
-
+class PowerUp {
+	method colision(visual){
+		visual.colisionConPowerUp(self)
+	}
+}
