@@ -53,7 +53,6 @@ object flotaEnemiga {
 class NaveEnemiga {
 	const objetivo = jugador
 	const agresion
-	const alColisionarConJugador 
 	var property position
 	var property direccion = derecha	
 	var property animacion = new AnimacionEnemigo()
@@ -66,8 +65,9 @@ class NaveEnemiga {
 
 	method mover() {
 		var proxima = direccion.siguiente(self.position())
-		if (self.debeGirar(proxima)) {
-			proxima = self.bajarYGirar(proxima)
+		if (self.debeGirar(proxima)) {			
+			direccion = direccion.opuesto()
+			proxima = self.bajar(proxima)
 		}
 		self.position(proxima)
 		
@@ -86,11 +86,6 @@ class NaveEnemiga {
 
 	method puedeIr(_position) {
 		return tablero.pertenece(_position)
-	}
-
-	method bajarYGirar(_position) {
-		direccion = direccion.opuesto()
-		return direccion.siguiente(self.bajar(_position))
 	}
 
 	method bajar(_position) {
@@ -118,7 +113,7 @@ class NaveEnemiga {
 	
 	method destruirObjetivo() {
 		sonidosManager.detenerSonidoAmbiente()	
-		alColisionarConJugador.apply()
+		n.finalizarPorDerrota()
 		objetivo.destruir()
 		objetivo.perder()
 	}

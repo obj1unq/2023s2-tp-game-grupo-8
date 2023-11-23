@@ -62,7 +62,7 @@ describe "funcionalidadDelJuego"{
 	}
 	
   	test "nave enemiga se mueve cumpliendo la animacion" {
-		const nave = new NaveEnemiga(position = game.at(5,5), agresion = 1, alColisionarConJugador = {})
+		const nave = new NaveEnemiga(position = game.at(5,5), agresion = 1)
 		assert.equals(game.at(5,5), nave.position())
 		
 		nave.direccion(derecha)
@@ -140,7 +140,7 @@ describe "Animaciones" {
 	
 	
 	test "Enemigo"{
-		const naveAhora = new NaveEnemiga(position = game.at(2,5),agresion = null, alColisionarConJugador = null)
+		const naveAhora = new NaveEnemiga(position = game.at(2,5),agresion = null)
 				
 		assert.equals(naveAhora.image(), "enemigo-1.png")
 		naveAhora.animacion().animar()
